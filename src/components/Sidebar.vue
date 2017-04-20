@@ -1,8 +1,11 @@
 <template>
-  <el-menu mode="vertical" default-active="1" class="el-menu-vertical-demo">
-      <el-menu-item index="1"><i class="el-icon-menu"></i>Opportunities</el-menu-item>
-      <el-menu-item index="2"><i class="el-icon-document"></i>Suggested articles</el-menu-item>
-      <el-menu-item index="3"><i class="el-icon-setting"></i>Settings</el-menu-item>
+  <el-menu mode="vertical" default-active="1" class="el-menu-vertical-demo" :router="true" @open="handleOpen" @close="handleClose">
+      <el-submenu index="/opportunities">
+        <template slot="title"><i class="el-icon-menu"></i>Opportunities</template>
+        <el-menu-item index="opportunity-form"><i class="el-icon-plus"></i>Add new</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="/"><i class="el-icon-document"></i>Suggested articles</el-menu-item>
+      <el-menu-item index="/"><i class="el-icon-setting"></i>Settings</el-menu-item>
   </el-menu>
 </template>
 
@@ -20,18 +23,19 @@ export default {
     },
   },
   methods: {
-    goTo(route) {
-      this.$router.push(route);
-    },
     logout() {
       auth.logout();
+    },
+    handleOpen(key) {
+      this.$router.push(key);
+    },
+    handleClose(key) {
+      this.$router.push(key);
     },
   },
 };
 </script>
 
 <style scoped>
-  .el-menu {
-    text-align: left;
-  }
+
 </style>
