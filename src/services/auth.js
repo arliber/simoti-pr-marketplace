@@ -8,10 +8,19 @@ const SIGNUP_URL = `${API_URL}/signup`;
 
 export default {
 
+  setAxiosHeader() {
+    axios.defaults.headers.common.Authorization = `Bearer ${store.getters.user.token}`;
+  },
+
+  clearAxiosHeader() {
+    axios.defaults.headers.common.Authorization = '';
+  },
+
   login(context, creds, redirect) {
     axios.post(LOGIN_URL, creds)
       .then((result) => {
         store.dispatch('setUser', result.data);
+        this.setAxiosHeader();
         if (redirect) {
           router.push(redirect);
         }
@@ -35,24 +44,7 @@ export default {
 
   logout() {
     store.dispatch('unsetUser');
+    this.clearAxiosHeader();
   },
 
-  /* checkAuth () {
-    var user = localStorage.getItem('user')
-    if (user) {
-      this.user = Object.assign(JSON.parse(user), {authenticated: true})
-    } else {
-      this.user = { authenticated: false }
-    }
-  }, */
-
-  getAuthHeader() {
-    let header = { };
-    if (store.getters.isUserLoggedin()) {
-      header = {
-        Authorization: `Bearer ${store.getters.user.token}`,
-      };
-    }
-    return header;
-  },
 };

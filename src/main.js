@@ -8,7 +8,6 @@ import App from './App';
 import store from './store';
 import router from './router';
 
-
 Vue.config.productionTip = false;
 Vue.use(ElementUI, { locale });
 

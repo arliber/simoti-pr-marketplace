@@ -12,18 +12,17 @@
       <el-form-item label="Article">
 
         <el-card>
-          <el-input placeholder="URL" v-model="form.title">
+          <el-input placeholder="URL" v-model="form.articleUrl">
             <template slot="prepend">http://</template>
           </el-input>
           OR
           <el-upload
-            class="upload-demo"
             drag
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            multiple>
+            ref="uploader"
+            :auto-upload="false"
+            :multiple="true"
+            :file-list="form.files"
+            action="/">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
             <div class="el-upload__tip" slot="tip">pdf/doc/docx files with a size less than 500kb</div>
@@ -34,18 +33,18 @@
 
 
       <el-form-item label="Publication name">
-        <el-input v-model="form.title"></el-input>
+        <el-input v-model="form.publications"></el-input>
       </el-form-item>
 
       <el-form-item label="Submission date">
-          <el-date-picker type="date" placeholder="Pick a date" v-model="form.date1"></el-date-picker>
+          <el-date-picker type="date" placeholder="Pick a date" v-model="form.submissionDate"></el-date-picker>
       </el-form-item>
       <el-form-item label="Approx. air date">
-        <el-date-picker type="date" placeholder="Pick a date" v-model="form.date1"></el-date-picker>
+        <el-date-picker type="date" placeholder="Pick a date" v-model="form.airDate"></el-date-picker>
       </el-form-item>
 
       <el-form-item label="Activity form">
-        <el-input type="textarea" v-model="form.desc"></el-input>
+        <el-input type="textarea" v-model="form.comments"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -58,19 +57,20 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'opportunityForm',
   data() {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
+        title: '',
+        articleUrl: '',
+        publications: '',
+        submissionDate: '',
+        airDate: '',
+        comments: '',
+        files: [],
       },
     };
   },
@@ -78,8 +78,23 @@ export default {
     goTo(route) {
       this.$router.push(route);
     },
+    /* clearFileList() {
+      console.log('Clearing list..');
+      this.$refs.uploader.uploadFiles = [];
+    },*/
     onSubmit() {
-      console.log('submit!');
+      const data = new FormData();
+      // Static data
+      Object.keys(this.form).forEach((key) => {
+        data.append(key, this.form[key]);
+      });
+      // Files
+      const files = document.querySelector('input[name=file]').files;
+      for (let i = 0; i < files.length; i += 1) {
+        data.append('file', files[i]);
+      }
+
+      axios.put('http://localhost:3000/api/opportunities', data);
     },
   },
 };
