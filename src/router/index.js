@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '@/components/Home';
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';
+import Settings from '@/components/Settings';
 import Opportunities from '@/components/Opportunities';
 import OpportunityForm from '@/components/OpportunityForm';
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/opportunity-form',
       name: 'OpportunityForm',
       component: OpportunityForm,
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings,
     },
   ],
 });
