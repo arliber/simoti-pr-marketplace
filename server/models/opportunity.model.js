@@ -12,7 +12,7 @@ const opportunitySchema = new Schema({
   airDate: { type: Date },
   files: { type: Array },
   comments: { type: String },
-  status: { type: String, required: true, default: 'live' },
+  status: { type: String, required: true, default: 'Pending' },
   createDate: { type: Date },
   updateDate: { type: Date },
 });

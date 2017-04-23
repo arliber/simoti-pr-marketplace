@@ -10,6 +10,7 @@ export default new Vuex.Store({
   })],
   state: {
     user: { },
+    opportunities: [],
   },
   getters: {
     isUserLoggedin(state) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     user(state) {
       return state.user;
+    },
+    opportunities(state) {
+      return state.opportunities;
     },
   },
   mutations: {
@@ -26,6 +30,12 @@ export default new Vuex.Store({
     UNSET_USER(state) {
       state.user = {};
     },
+    SET_OPPORTUNITIES(state, opportunities) {
+      state.opportunities = opportunities;
+    },
+    ADD_OPPORTUNITY(state, opportunity) {
+      state.opportunities.push(opportunity);
+    },
   },
   actions: {
     setUser({ commit }, userData) {
@@ -33,6 +43,12 @@ export default new Vuex.Store({
     },
     unsetUser({ commit }) {
       commit('UNSET_USER');
+    },
+    setOpportunities({ commit }, opportunities) {
+      commit('SET_OPPORTUNITIES', opportunities);
+    },
+    addOpportunity({ commit }, opportunity) {
+      commit('ADD_OPPORTUNITY', opportunity);
     },
   },
 });

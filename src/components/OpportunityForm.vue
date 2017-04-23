@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <div slot="header" class="clearfix">
-      <span style="line-height: 36px;">Add new opportunity</span>
+      <span style="line-height: 36px;">Add new article</span>
     </div>
 
     <el-form ref="form" :model="form" label-width="120px">

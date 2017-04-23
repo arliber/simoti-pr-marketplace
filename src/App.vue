@@ -2,10 +2,10 @@
   <div id="app">
     <main-menu></main-menu>
     <el-row>
-      <el-col :span="4">
+      <el-col :span="6">
         <sidebar></sidebar>
       </el-col>
-      <el-col :span="20" id="main-content">
+      <el-col :span="18" id="main-content">
         <router-view></router-view>
       </el-col>
     </el-row>
