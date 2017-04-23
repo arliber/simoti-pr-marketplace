@@ -6,17 +6,17 @@ const API_URL = '/api';
 const LOGIN_URL = `${API_URL}/signin`;
 const SIGNUP_URL = `${API_URL}/signup`;
 
-export default {
+class Auth {
 
-  setAxiosHeader() {
+  static setAxiosHeader() {
     axios.defaults.headers.common.Authorization = `Bearer ${store.getters.user.token}`;
-  },
+  }
 
-  clearAxiosHeader() {
+  static clearAxiosHeader() {
     axios.defaults.headers.common.Authorization = '';
-  },
+  }
 
-  login(context, creds, redirect) {
+  static login(context, creds, redirect) {
     axios.post(LOGIN_URL, creds)
       .then((result) => {
         store.dispatch('setUser', result.data);
@@ -27,9 +27,9 @@ export default {
       }).catch((err) => {
         context.error = err; // TODO: Report error back
       });
-  },
+  }
 
-  signup(context, creds, redirect) {
+  static signup(context, creds, redirect) {
     axios.post(SIGNUP_URL, creds)
       .then((result) => {
         store.dispatch('setUser', result.data);
@@ -40,11 +40,22 @@ export default {
       .catch((err) => {
         context.error = err; // TODO: Report error back
       });
-  },
+  }
 
-  logout() {
+  static logout() {
     store.dispatch('unsetUser');
     this.clearAxiosHeader();
-  },
+  }
 
-};
+}
+
+// Waiting for response @ https://github.com/robinvdvleuten/vuex-persistedstate/issues/20
+/* store.subscribe((mutation) => {
+  if (mutation.type === 'SET_USER') {
+    Auth.setAxiosHeader();
+  } else if (mutation.type === 'UNSET_USER') {
+    Auth.clearAxiosHeader();
+  }
+});*/
+
+export default Auth;

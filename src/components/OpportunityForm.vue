@@ -58,6 +58,7 @@
 
 <script>
 import axios from 'axios';
+import store from '../store';
 
 export default {
   name: 'opportunityForm',
@@ -78,7 +79,9 @@ export default {
     goTo(route) {
       this.$router.push(route);
     },
-    /* clearFileList() {
+    /*
+     // TODO: Need to clean the list when new files are added. Asked @ https://github.com/ElemeFE/element/issues/4401
+     clearFileList() {
       console.log('Clearing list..');
       this.$refs.uploader.uploadFiles = [];
     },*/
@@ -94,7 +97,24 @@ export default {
         data.append('file', files[i]);
       }
 
-      axios.put('http://localhost:3000/api/opportunities', data);
+      axios.put('http://localhost:3000/api/opportunities', data, {
+        headers: {
+          Authorization: `Bearer ${store.getters.user.token}`,
+        },
+      }).then(() => {
+        this.$message({
+          showClose: true,
+          message: 'The opportunity was added successfully',
+          type: 'success',
+        });
+        this.$router.push('/opportunities');
+      }).catch(() => {
+        this.$message({
+          showClose: true,
+          message: 'Oops, something went wrong.. Please let us know',
+          type: 'error',
+        });
+      });
     },
   },
 };
