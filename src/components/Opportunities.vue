@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     opportunities() {
-      return this.$store.getters.opportunities;
+      return this.$store.getters.personalOpportunities;
     },
   },
   methods: {

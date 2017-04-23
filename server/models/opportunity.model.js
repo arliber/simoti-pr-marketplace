@@ -13,6 +13,7 @@ const opportunitySchema = new Schema({
   files: { type: Array },
   comments: { type: String },
   status: { type: String, required: true, default: 'Pending' },
+  proposals: { type: Array },
   createDate: { type: Date },
   updateDate: { type: Date },
 });
@@ -30,7 +31,13 @@ opportunitySchema.pre('save', function(next) {
 });
 
 opportunitySchema.statics.getUserOpportunities = function(userId) {
-  return this.find({ userId }).exec();
+  return this.find(/*{ userId }*/).exec(); // TODO: Return filter when starting to get MARKET opportunities from server
+};
+
+opportunitySchema.statics.getMarketOpportunities = function(userId) {
+  return this.find({
+    userId: { $ne: userId },
+  }).exec();
 };
 
 module.exports = mongoose.model('opportunities', opportunitySchema);

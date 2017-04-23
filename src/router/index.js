@@ -6,6 +6,7 @@ import Signup from '@/components/Signup';
 import Settings from '@/components/Settings';
 import Opportunities from '@/components/Opportunities';
 import OpportunityForm from '@/components/OpportunityForm';
+import MarketOpportunities from '@/components/MarketOpportunities';
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/opportunities',
       name: 'Opportunities',
       component: Opportunities,
+    },
+    {
+      path: '/market-opportunities',
+      name: 'MarketOpportunities',
+      component: MarketOpportunities,
     },
     {
       path: '/opportunity-form',

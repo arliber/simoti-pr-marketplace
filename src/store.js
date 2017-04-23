@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 import persistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
@@ -19,8 +20,11 @@ export default new Vuex.Store({
     user(state) {
       return state.user;
     },
-    opportunities(state) {
-      return state.opportunities;
+    personalOpportunities(state) {
+      return state.opportunities.filter(opportunity => opportunity.userId === state.user.email);
+    },
+    marketOpportunities(state) {
+      return state.opportunities.filter(opportunity => opportunity.userId !== state.user.email);
     },
   },
   mutations: {
@@ -36,6 +40,14 @@ export default new Vuex.Store({
     ADD_OPPORTUNITY(state, opportunity) {
       state.opportunities.push(opportunity);
     },
+    ADD_PROPOSAL(state, payload) {
+      state.opportunities
+        .find(opportunity => opportunity._id === payload.opportunityId)
+        .proposals.push({
+          userId: state.user.email,
+          proposalInfo: payload.proposalInfo,
+        });
+    },
   },
   actions: {
     setUser({ commit }, userData) {
@@ -49,6 +61,18 @@ export default new Vuex.Store({
     },
     addOpportunity({ commit }, opportunity) {
       commit('ADD_OPPORTUNITY', opportunity);
+    },
+    addPropositionProposal({ commit, state }, payload) {
+      const data = {
+        proposalInfo: payload.proposalInfo,
+      };
+      return axios.post(`/api/opportunities/${payload.opportunityId}/proposals`, data, {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      }).then(() => {
+        commit('ADD_PROPOSAL', payload);
+      });
     },
   },
 });

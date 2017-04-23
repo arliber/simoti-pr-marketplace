@@ -73,5 +73,8 @@ routes.post('/api/signin', usersController.signin);
 
 routes.get('/api/opportunities', jwtCheck, opportunitiesController.getOpportunities);
 routes.put('/api/opportunities',jwtCheck, upload.any(), sendUploadToGCS, opportunitiesController.addOpportunity);
+routes.post('/api/opportunities/:id/proposals/', jwtCheck, opportunitiesController.addProposal);
+
+// routes.get('/api/marketOpportunities', jwtCheck, opportunitiesController.getMarketOpportunities);
 
 module.exports = routes;

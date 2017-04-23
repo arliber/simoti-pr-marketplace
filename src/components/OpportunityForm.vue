@@ -43,7 +43,7 @@
         <el-date-picker type="date" placeholder="Pick a date" v-model="form.airDate"></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="Activity form">
+      <el-form-item label="Comments">
         <el-input type="textarea" v-model="form.comments"></el-input>
       </el-form-item>
 
