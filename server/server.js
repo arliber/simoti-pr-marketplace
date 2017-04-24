@@ -5,8 +5,8 @@ let bodyParser = require('body-parser');
 let routes = require('./routes');
 
 // Mongoose setup
- mongoose.connect('mongodb://localhost/simoti');
-// mongoose.connect('mongodb://admin:juh7hftA@ds117251.mlab.com:17251/simoti');
+// mongoose.connect('mongodb://localhost/simoti');
+mongoose.connect('mongodb://admin:juh7hftA@ds117251.mlab.com:17251/simoti');
 mongoose.Promise = global.Promise;
 
 // Express setup
