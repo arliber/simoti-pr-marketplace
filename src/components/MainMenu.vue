@@ -33,6 +33,11 @@ export default {
     },
     logout() {
       auth.logout('/login');
+      this.$message({
+        showClose: true,
+        message: 'You\'ve been logged out',
+        type: 'success',
+      });
     },
   },
 };
