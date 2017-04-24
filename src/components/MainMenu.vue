@@ -55,6 +55,7 @@ export default {
   #avatar-logout img {
     margin-right: 12px;
     height: 65%;
+    border-radius: 4px;
   }
   #logo {
     padding-top: 4px;

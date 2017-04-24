@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/components/Home';
-import Login from '@/components/Login';
-import Signup from '@/components/Signup';
-import Settings from '@/components/Settings';
-import MyColumns from '@/components/MyColumns';
-import Opportunities from '@/components/Opportunities';
-import OpportunityForm from '@/components/OpportunityForm';
-import MarketOpportunities from '@/components/MarketOpportunities';
+import Home from '../components/Home';
+import Login from '../components/Login';
+import Signup from '../components/Signup';
+import Settings from '../components/Settings';
+import MyColumns from '../components/MyColumns';
+import Opportunities from '../components/Opportunities';
+import OpportunityForm from '../components/OpportunityForm';
+import MarketOpportunities from '../components/MarketOpportunities';
 import store from '../store';
 
 Vue.use(Router);

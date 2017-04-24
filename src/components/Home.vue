@@ -1,6 +1,6 @@
 <template>
   <div class="welcome">
-    <img src="../assets/welcome.jpg" width="80%" height="80%">
+    <img src="../assets/welcome.jpg" width="50%" height="50%">
   </div>
 </template>
 

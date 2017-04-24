@@ -97,7 +97,7 @@ export default {
         data.append('file', files[i]);
       }
 
-      axios.put('http://localhost:3000/api/opportunities', data, {
+      axios.put('/api/opportunities', data, {
         headers: {
           Authorization: `Bearer ${store.getters.user.token}`,
         },

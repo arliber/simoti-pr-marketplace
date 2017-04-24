@@ -27,6 +27,11 @@ opportunitySchema.pre('save', function(next) {
     this.createDate = currentDate;
   }
 
+  // Append HTTP to article links
+  if (!this.articleUrl.match(/http:\/\//)) {
+    this.articleUrl = `http://${this.articleUrl}`;
+  }
+
   next();
 });
 

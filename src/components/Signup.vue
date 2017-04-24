@@ -2,8 +2,12 @@
   <el-row justify="center" align="middle" type="flex">
     <el-col :xs="20" :sm="12" :md="12" :lg="8">
       <el-card class="box-card">
-        <el-alert v-if="error" title="Login error" type="error" :description="error.response.data.error" show-icon></el-alert>
-        <h1>Signup</h1>
+
+        <div slot="header">Signup</div>
+
+        <el-alert title="Functionality disabled. Please contact your account manager" type="warning" :closable="false" show-icon></el-alert>
+
+        <!--<el-alert v-if="error" title="Login error" type="error" :description="error.response.data.error" show-icon></el-alert>
 
         <el-form ref="form" :model="form" label-width="120px">
           <el-form-item label="Email">
@@ -15,7 +19,7 @@
           <el-form-item>
             <el-button type="primary" @click="signup">Signup</el-button>
           </el-form-item>
-        </el-form>
+        </el-form>-->
 
       </el-card>
     </el-col>

@@ -2,7 +2,6 @@
   <el-card class="box-card">
     <div slot="header" class="clearfix">
       <span style="line-height: 36px;">Opportunities</span>
-      <el-button style="float: right;" type="primary" @click="goTo('/opportunity-form')"><i class="el-icon-plus"></i> Add</el-button>
     </div>
 
     <el-table :data="opportunities" border style="width: 100%">
@@ -12,7 +11,7 @@
           <div v-if="assetsAvaialble(props.row)">No assets</div>
           <ul class="files-list">
             <li v-if="props.row.articleUrl !== ''">
-              <a :href="props.row.articleUrl" target="_blank"><i class="el-icon-share"></i> {{props.row.articleUrl}}</a>
+              <a :href="props.row.articleUrl" target="_blank"><i class="el-icon-share"></i> Article URL</a>
             </li>
             <li v-for="(file, index) in props.row.files">
               <a :href="file" target="_blank"><i class="el-icon-document"></i>File #{{index+1}}</a>

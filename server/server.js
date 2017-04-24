@@ -5,7 +5,8 @@ let bodyParser = require('body-parser');
 let routes = require('./routes');
 
 // Mongoose setup
-mongoose.connect('mongodb://localhost/simoti');
+ mongoose.connect('mongodb://localhost/simoti');
+// mongoose.connect('mongodb://admin:juh7hftA@ds117251.mlab.com:17251/simoti');
 mongoose.Promise = global.Promise;
 
 // Express setup
@@ -13,10 +14,11 @@ var app = express(); // Create a new instance of the server
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static('public'));
+app.use('/', express.static(__dirname + '/../dist'));
 
 // Routes
 app.use(routes);
+
 
 // Handle errors
 app.use(function (err, req, res, next) {
@@ -26,6 +28,11 @@ app.use(function (err, req, res, next) {
 });
 
 // Start server
-app.listen(3000, function (err){ // Start the server on port 5000
-  console.log('running server on port ' + 3000); // This code is exectued when server it up and running. We just print a message
+const port = process.env.PORT || 3000;
+app.listen(port, function (err){
+  if (err) {
+    console.log('Error: Unable to start server on port ', port);
+  } else {
+    console.log('Running server on port ', port);
+  }
 });

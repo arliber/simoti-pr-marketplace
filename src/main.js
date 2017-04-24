@@ -19,6 +19,7 @@ new Vue({
   store,
   template: '<App/>',
   components: { App },
+  render: h => h(App),
   mounted() {
     axios.interceptors.response.use(response => response, (err) => {
       if (err.response.status === 401 || err.response.status === 403) {

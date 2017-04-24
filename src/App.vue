@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import MainMenu from '@/components/MainMenu';
-import Sidebar from '@/components/Sidebar';
+import MainMenu from './components/MainMenu';
+import Sidebar from './components/Sidebar';
 
 export default {
   name: 'app',
@@ -45,8 +45,10 @@ export default {
 </script>
 
 <style>
+body {
+  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun, sans-serif;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
