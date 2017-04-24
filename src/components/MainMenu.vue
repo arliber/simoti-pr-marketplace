@@ -32,7 +32,7 @@ export default {
       this.$router.push(route);
     },
     logout() {
-      auth.logout();
+      auth.logout('/login');
     },
   },
 };

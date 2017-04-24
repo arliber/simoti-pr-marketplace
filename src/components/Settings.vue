@@ -10,6 +10,9 @@
 <script>
 export default {
   name: 'settings',
+  created() {
+    this.$emit('toggleView', 'withSidebar');
+  },
 };
 </script>
 

@@ -117,6 +117,9 @@ export default {
       });
     },
   },
+  created() {
+    this.$emit('toggleView', 'withSidebar');
+  },
 };
 </script>
 

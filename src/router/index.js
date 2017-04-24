@@ -7,10 +7,11 @@ import Settings from '@/components/Settings';
 import Opportunities from '@/components/Opportunities';
 import OpportunityForm from '@/components/OpportunityForm';
 import MarketOpportunities from '@/components/MarketOpportunities';
+import store from '../store';
 
 Vue.use(Router);
 
-export default new Router({
+const AppRouter = new Router({
   routes: [
     {
       path: '/',
@@ -49,3 +50,21 @@ export default new Router({
     },
   ],
 });
+
+/* AppRouter.afterEach((to) => { //TODO: Find out why the event is not fired. Find a way to do so.
+  if (to.path === '/login' || to.path === 'signup') {
+    this.$emit('toggleView', false);
+  } else {
+    this.$emit('toggleView', true);
+  }
+});*/
+
+AppRouter.beforeEach((to, from, next) => {
+  if (to.path !== '/login' && to.path !== '/signup' && (!store.getters.user || !store.getters.user.email)) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+export default AppRouter;

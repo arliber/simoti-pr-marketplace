@@ -41,6 +41,9 @@
         auth.signup(this, this.form, '/');
       },
     },
+    created() {
+      this.$emit('toggleView', 'wide');
+    },
   };
 </script>
 

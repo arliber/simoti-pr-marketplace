@@ -42,9 +42,12 @@ class Auth {
       });
   }
 
-  static logout() {
+  static logout(redirect) {
     store.dispatch('unsetUser');
     this.clearAxiosHeader();
+    if (redirect) {
+      router.push(redirect);
+    }
   }
 
 }

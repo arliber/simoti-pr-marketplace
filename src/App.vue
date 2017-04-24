@@ -2,11 +2,11 @@
   <div id="app">
     <main-menu></main-menu>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="6" v-if="layoutSettings.sidebarVisible">
         <sidebar></sidebar>
       </el-col>
-      <el-col :span="18" id="main-content">
-        <router-view></router-view>
+      <el-col :span="layoutSettings.mainSectionWidth" id="main-content">
+        <router-view v-on:toggleView="toggleView"></router-view>
       </el-col>
     </el-row>
   </div>
@@ -21,6 +21,25 @@ export default {
   components: {
     MainMenu,
     Sidebar,
+  },
+  data() {
+    return {
+      layoutSettings: {
+        sidebarVisible: true,
+        mainSectionWidth: 18,
+      },
+    };
+  },
+  methods: {
+    toggleView(layoutType) {
+      if (layoutType === 'wide') {
+        this.layoutSettings.sidebarVisible = false;
+        this.layoutSettings.mainSectionWidth = 24;
+      } else {
+        this.layoutSettings.sidebarVisible = true;
+        this.layoutSettings.mainSectionWidth = 18;
+      }
+    },
   },
 };
 </script>
