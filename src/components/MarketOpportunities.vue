@@ -34,7 +34,7 @@
       <el-alert title="What is that?" type="info" description="Tell us a bit about the client and how he fits into the article. Provide the links to link to and the preferred placement in the article" :closeable="false" show-icon></el-alert>
       <el-form>
         <el-form-item label="Info">
-          <el-input type="textarea" v-model="currentProposalInfo" rows="8"></el-input>
+          <el-input type="textarea" v-model="currentProposalInfo" :rows="8"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -77,6 +77,11 @@ export default {
       this.$store.dispatch('addPropositionProposal', {
         proposalInfo: this.currentProposalInfo,
         opportunityId: this.currentProposition._id,
+      });
+      this.$message({
+        showClose: true,
+        message: 'Proposal was submitted for review',
+        type: 'success',
       });
     },
     assetsAvaialble(row) {

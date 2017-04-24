@@ -6,7 +6,7 @@
       <el-menu-item index="market-opportunities"><i class="el-icon-star-on"></i>Opportunities</el-menu-item>
     </el-menu-item-group>
     <el-menu-item-group title="Publications">
-      <el-menu-item index="/"><i class="el-icon-menu"></i>My Columns</el-menu-item>
+      <el-menu-item index="/my-columns"><i class="el-icon-menu"></i>My Columns</el-menu-item>
       <!--<el-menu-item index="/"><i class="el-icon-upload2"></i>Publish</el-menu-item>-->
     </el-menu-item-group>
     <el-menu-item-group title="Extras">

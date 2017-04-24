@@ -4,6 +4,7 @@ import Home from '@/components/Home';
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';
 import Settings from '@/components/Settings';
+import MyColumns from '@/components/MyColumns';
 import Opportunities from '@/components/Opportunities';
 import OpportunityForm from '@/components/OpportunityForm';
 import MarketOpportunities from '@/components/MarketOpportunities';
@@ -47,6 +48,11 @@ const AppRouter = new Router({
       path: '/settings',
       name: 'Settings',
       component: Settings,
+    },
+    {
+      path: '/my-columns',
+      name: 'MyColumns',
+      component: MyColumns,
     },
   ],
 });
