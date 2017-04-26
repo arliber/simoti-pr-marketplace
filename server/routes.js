@@ -68,12 +68,17 @@ function sendUploadToGCS(req, res, next) {
 // Routes
 let routes = express.Router();
 
-routes.post('/api/signup', usersController.signup);
-routes.post('/api/signin', usersController.signin);
+function routeLogger(req, res, next) {
+  console.log(`Router: access to [${req.path}] by [${req.user?req.user.email:'guest'}]`);
+  next();
+}
 
-routes.get('/api/opportunities', jwtCheck, opportunitiesController.getOpportunities);
-routes.put('/api/opportunities',jwtCheck, upload.any(), sendUploadToGCS, opportunitiesController.addOpportunity);
-routes.post('/api/opportunities/:id/proposals/', jwtCheck, opportunitiesController.addProposal);
+routes.post('/api/signup', routeLogger, usersController.signup);
+routes.post('/api/signin', routeLogger, usersController.signin);
+
+routes.get('/api/opportunities', jwtCheck, routeLogger, opportunitiesController.getOpportunities);
+routes.put('/api/opportunities',jwtCheck, routeLogger, upload.any(), sendUploadToGCS, opportunitiesController.addOpportunity);
+routes.post('/api/opportunities/:id/proposals/', jwtCheck, routeLogger, opportunitiesController.addProposal);
 
 // routes.get('/api/marketOpportunities', jwtCheck, opportunitiesController.getMarketOpportunities);
 

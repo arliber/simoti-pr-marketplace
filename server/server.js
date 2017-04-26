@@ -5,7 +5,7 @@ let bodyParser = require('body-parser');
 let routes = require('./routes');
 
 // Mongoose setup
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   console.log('Server: Connecting to production DB');
   mongoose.connect('mongodb://admin:juh7hftA@ds117251.mlab.com:17251/simoti');
 } else {
