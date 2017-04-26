@@ -5,12 +5,18 @@ let bodyParser = require('body-parser');
 let routes = require('./routes');
 
 // Mongoose setup
-// mongoose.connect('mongodb://localhost/simoti');
-mongoose.connect('mongodb://admin:juh7hftA@ds117251.mlab.com:17251/simoti');
+if(process.env.NODE_ENV === 'production') {
+  console.log('Server: Connecting to production DB');
+  mongoose.connect('mongodb://admin:juh7hftA@ds117251.mlab.com:17251/simoti');
+} else {
+  console.log('Server: Connecting to local DB');
+  mongoose.connect('mongodb://localhost/simoti');
+}
+
 mongoose.Promise = global.Promise;
 
 // Express setup
-var app = express(); // Create a new instance of the server
+var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -18,7 +24,6 @@ app.use('/', express.static(__dirname + '/../dist'));
 
 // Routes
 app.use(routes);
-
 
 // Handle errors
 app.use(function (err, req, res, next) {
@@ -31,8 +36,8 @@ app.use(function (err, req, res, next) {
 const port = process.env.PORT || 3000;
 app.listen(port, function (err){
   if (err) {
-    console.log('Error: Unable to start server on port ', port);
+    console.error(`Server: Unable to start server on port [${port}]`);
   } else {
-    console.log('Running server on port ', port);
+    console.log(`Server: Started on port ${port}`);
   }
 });
