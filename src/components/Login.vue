@@ -43,9 +43,6 @@ export default {
       auth.login(this, this.form, '/');
     },
   },
-  created() {
-    this.$emit('toggleView', 'wide');
-  },
 };
 </script>
 

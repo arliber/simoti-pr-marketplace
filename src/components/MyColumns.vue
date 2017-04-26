@@ -10,9 +10,6 @@
 <script>
 export default {
   name: 'myColumns',
-  created() {
-    this.$emit('toggleView', 'withSidebar');
-  },
 };
 </script>
 

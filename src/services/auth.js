@@ -54,6 +54,7 @@ class Auth {
 
 // Waiting for response @ https://github.com/robinvdvleuten/vuex-persistedstate/issues/20
 /* store.subscribe((mutation) => {
+  console.log('MUTATED', mutation);
   if (mutation.type === 'SET_USER') {
     Auth.setAxiosHeader();
   } else if (mutation.type === 'UNSET_USER') {

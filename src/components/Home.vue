@@ -7,9 +7,6 @@
 <script>
 export default {
   name: 'home',
-  created() {
-    this.$emit('toggleView', 'withSidebar');
-  },
 };
 </script>
 

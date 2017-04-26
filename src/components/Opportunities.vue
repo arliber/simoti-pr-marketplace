@@ -71,9 +71,6 @@ export default {
       this.$store.dispatch('setOpportunities', opportunities.data);
     });
   },
-  created() {
-    this.$emit('toggleView', 'withSidebar');
-  },
 };
 </script>
 

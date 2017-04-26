@@ -6,7 +6,7 @@
         <sidebar></sidebar>
       </el-col>
       <el-col :span="layoutSettings.mainSectionWidth" id="main-content">
-        <router-view v-on:toggleView="toggleView"></router-view>
+        <router-view></router-view>
       </el-col>
     </el-row>
   </div>
@@ -30,9 +30,17 @@ export default {
       },
     };
   },
+  watch: {
+    $route: function (newRoute) { //eslint-disable-line
+      this.toggleView(newRoute.name);
+    },
+  },
+  created() {
+    this.toggleView(this.$route.name);
+  },
   methods: {
-    toggleView(layoutType) {
-      if (layoutType === 'wide') {
+    toggleView(routeName) {
+      if (routeName === 'login' || routeName === 'signup') {
         this.layoutSettings.sidebarVisible = false;
         this.layoutSettings.mainSectionWidth = 24;
       } else {

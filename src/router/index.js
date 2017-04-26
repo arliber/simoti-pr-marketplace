@@ -16,54 +16,46 @@ const AppRouter = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home,
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: Login,
     },
     {
       path: '/signup',
-      name: 'Signup',
+      name: 'signup',
       component: Signup,
     },
     {
       path: '/opportunities',
-      name: 'Opportunities',
+      name: 'opportunities',
       component: Opportunities,
     },
     {
       path: '/market-opportunities',
-      name: 'MarketOpportunities',
+      name: 'marketOpportunities',
       component: MarketOpportunities,
     },
     {
       path: '/opportunity-form',
-      name: 'OpportunityForm',
+      name: 'opportunityForm',
       component: OpportunityForm,
     },
     {
       path: '/settings',
-      name: 'Settings',
+      name: 'settings',
       component: Settings,
     },
     {
       path: '/my-columns',
-      name: 'MyColumns',
+      name: 'myColumns',
       component: MyColumns,
     },
   ],
 });
-
-/* AppRouter.afterEach((to) => { //TODO: Find out why the event is not fired. Find a way to do so.
-  if (to.path === '/login' || to.path === 'signup') {
-    this.$emit('toggleView', false);
-  } else {
-    this.$emit('toggleView', true);
-  }
-});*/
 
 AppRouter.beforeEach((to, from, next) => {
   if (to.path !== '/login' && to.path !== '/signup' && (!store.getters.user || !store.getters.user.email)) {
