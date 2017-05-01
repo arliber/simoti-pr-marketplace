@@ -1,11 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '../components/Home';
+import Dashboard from '../components/Dashboard';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
-import Settings from '../components/Settings';
-import MyColumns from '../components/MyColumns';
-import Opportunities from '../components/Opportunities';
+import Publish from '../components/Publish';
 import OpportunityForm from '../components/OpportunityForm';
 import MarketOpportunities from '../components/MarketOpportunities';
 import store from '../store';
@@ -16,8 +14,8 @@ const AppRouter = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      name: 'dashboard',
+      component: Dashboard,
     },
     {
       path: '/login',
@@ -30,9 +28,9 @@ const AppRouter = new Router({
       component: Signup,
     },
     {
-      path: '/opportunities',
-      name: 'opportunities',
-      component: Opportunities,
+      path: '/publish',
+      name: 'publish',
+      component: Publish,
     },
     {
       path: '/market-opportunities',
@@ -43,16 +41,6 @@ const AppRouter = new Router({
       path: '/opportunity-form',
       name: 'opportunityForm',
       component: OpportunityForm,
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: Settings,
-    },
-    {
-      path: '/my-columns',
-      name: 'myColumns',
-      component: MyColumns,
     },
   ],
 });

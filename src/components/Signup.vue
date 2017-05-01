@@ -7,7 +7,7 @@
 
         <el-alert title="Functionality disabled. Please contact your account manager" type="warning" :closable="false" show-icon></el-alert>
 
-        <!--<el-alert v-if="error" title="Login error" type="error" :description="error.response.data.error" show-icon></el-alert>
+        <!--<el-alert v-if="error" title="Signup error" type="error" :description="error.response.data.error" show-icon></el-alert>
 
         <el-form ref="form" :model="form" label-width="120px">
           <el-form-item label="Email">

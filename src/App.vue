@@ -1,26 +1,28 @@
 <template>
   <div id="app">
     <main-menu></main-menu>
-    <el-row>
-      <el-col :span="6" v-if="layoutSettings.sidebarVisible">
-        <sidebar></sidebar>
-      </el-col>
-      <el-col :span="layoutSettings.mainSectionWidth" id="main-content">
-        <router-view></router-view>
-      </el-col>
-    </el-row>
+    <div class="bg-container">
+      <el-row id="content-section">
+        <el-col :span="6" v-if="layoutSettings.sidebarVisible">
+          <notifications></notifications>
+        </el-col>
+        <el-col :span="layoutSettings.mainSectionWidth" id="main-content">
+          <router-view></router-view>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
 import MainMenu from './components/MainMenu';
-import Sidebar from './components/Sidebar';
+import Notifications from './components/Notifications';
 
 export default {
   name: 'app',
   components: {
     MainMenu,
-    Sidebar,
+    Notifications,
   },
   data() {
     return {
@@ -56,12 +58,21 @@ export default {
 body {
   font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun, sans-serif;
 }
+.bg-container {
+  border-top: 1px solid #DBC9EA;
+  background: url(assets/bg.png) center center repeat-y;
+}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  margin: 0 auto;
+}
+#content-section {
+  width: 960px;
+  margin: 0 auto;
 }
 #main-content {
-  padding: 30px;
+  /*padding: 30px;*/
 }
 </style>
