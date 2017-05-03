@@ -1,8 +1,6 @@
 <template>
-  <el-card class="box-card">
-    <div slot="header" class="clearfix">
-      <span style="line-height: 36px;">Opportunities</span>
-    </div>
+
+  <div>
 
     <el-table :data="opportunities" border style="width: 100%">
       <el-table-column type="expand">
@@ -43,14 +41,15 @@
     </el-dialog>
     <!-- /Dialog -->
 
-  </el-card>
+  </div>
+
 </template>
 
 <script>
 import axios from 'axios';
 
 export default {
-  name: 'marketOpportunities',
+  name: 'articles',
   data() {
     return {
       proposalDialogVisible: false,
@@ -100,14 +99,6 @@ export default {
 </script>
 
 <style scoped>
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
   .center {
     text-align: center;
   }

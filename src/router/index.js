@@ -2,10 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from '../components/Dashboard';
 import Login from '../components/Login';
+import Assets from '../components/Assets';
 import Signup from '../components/Signup';
 import Publish from '../components/Publish';
 import OpportunityForm from '../components/OpportunityForm';
-import MarketOpportunities from '../components/MarketOpportunities';
 import store from '../store';
 
 Vue.use(Router);
@@ -33,9 +33,9 @@ const AppRouter = new Router({
       component: Publish,
     },
     {
-      path: '/market-opportunities',
-      name: 'marketOpportunities',
-      component: MarketOpportunities,
+      path: '/assets',
+      name: 'assets',
+      component: Assets,
     },
     {
       path: '/opportunity-form',

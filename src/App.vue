@@ -59,6 +59,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+.screen-content {
+  padding: 10px 0 0 40px;
+}
 #bg-container {
   border-top: 1px solid #DBC9EA;
   background: url(assets/bg.jpg) center center repeat-y;
@@ -77,5 +80,15 @@ body {
 #content {
   flex: 1;
   background: #fff;
+}
+.el-tabs__header {
+  background: #F2F2F2 linear-gradient(to right, #f2f2f2 0%,#ffffff 100%);
+  padding-left: 40px;
+  border-color: #DBC9EA;
+}
+.el-tabs__item.is-active {
+  background: #fff;
+  border-radius: 0 !important;
+  border-top-color: transparent !important;
 }
 </style>

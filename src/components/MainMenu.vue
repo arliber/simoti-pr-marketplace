@@ -3,7 +3,7 @@
      <el-menu-item index="1" @click="goTo('/')" class="logo"><img src="../assets/logo-white-small.png" id="logo"/></el-menu-item>
      <el-menu-item index="/"><i class="el-icon-menu"></i> DASHBOARD</el-menu-item>
      <el-menu-item index="publish"><i class="el-icon-upload"></i>PUBLISH</el-menu-item>
-     <el-menu-item index="2"><i class="el-icon-plus"></i> OFFER</el-menu-item>
+     <el-menu-item index="assets"><i class="el-icon-plus"></i> OFFER</el-menu-item>
      <!-- User management section -->
      <el-menu-item v-if="!isAuthenticated" @click="goTo('login')" index="4" class="push-right">Login</el-menu-item>
      <el-menu-item v-if="!isAuthenticated" @click="goTo('signup')" index="5" class="push-right">Signup</el-menu-item>
@@ -55,9 +55,6 @@ export default {
   .main-menu .el-menu-item.logo:hover {
     border-color: #fff;
     background: none;
-  }
-  .el-menu-item.is-active {
-    /*color: #8B59B7;*/
   }
   .el-menu--horizontal .el-menu-item.push-right {
     float: right;

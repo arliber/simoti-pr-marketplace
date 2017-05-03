@@ -1,12 +1,10 @@
 <template>
-
-  <el-tabs type="card" class="options">
+  <el-tabs type="card">
     <el-tab-pane label="FIND OPPORTUNITIES">
       <opportunities></opportunities>
     </el-tab-pane>
-    <el-tab-pane label="STATUS">STATUS</el-tab-pane>
+    <el-tab-pane label="STATUS">Status</el-tab-pane>
   </el-tabs>
-
 </template>
 
 <script>
@@ -21,13 +19,5 @@ export default {
 </script>
 
 <style>
-  .options .el-tabs__header {
-    background: #F2F2F2 linear-gradient(to right, #f2f2f2 0%,#ffffff 100%);
-    padding-left: 40px;
-    border-color: #DBC9EA;
-  }
-  .options .el-tabs__item.is-active {
-    background: #fff;
-    border-radius: 0 !important;
-  }
+
 </style>
