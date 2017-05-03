@@ -1,15 +1,11 @@
 <template>
   <div id="app">
     <main-menu></main-menu>
-    <div class="bg-container">
-      <el-row id="content-section">
-        <el-col :span="6" v-if="layoutSettings.sidebarVisible">
-          <notifications></notifications>
-        </el-col>
-        <el-col :span="layoutSettings.mainSectionWidth" id="main-content">
-          <router-view></router-view>
-        </el-col>
-      </el-row>
+    <div id="bg-container">
+      <section id="content-section">
+        <notifications id="notifications"></notifications>
+        <router-view id="content"></router-view>
+      </section>
     </div>
   </div>
 </template>
@@ -58,21 +54,28 @@ export default {
 body {
   font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun, sans-serif;
 }
-.bg-container {
-  border-top: 1px solid #DBC9EA;
-  background: url(assets/bg.png) center center repeat-y;
-}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin: 0 auto;
 }
+#bg-container {
+  border-top: 1px solid #DBC9EA;
+  background: url(assets/bg.jpg) center center repeat-y;
+}
+
 #content-section {
   width: 960px;
   margin: 0 auto;
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
 }
-#main-content {
-  /*padding: 30px;*/
+#notifications {
+  flex: 0 0 18em;
+}
+#content {
+  flex: 1;
+  background: #fff;
 }
 </style>

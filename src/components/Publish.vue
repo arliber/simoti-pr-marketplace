@@ -22,7 +22,7 @@ export default {
 
 <style>
   .options .el-tabs__header {
-    background: #F2F2F2;
+    background: #F2F2F2 linear-gradient(to right, #f2f2f2 0%,#ffffff 100%);
     padding-left: 40px;
     border-color: #DBC9EA;
   }
