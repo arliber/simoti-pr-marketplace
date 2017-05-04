@@ -5,7 +5,7 @@ const publicationSchema = new Schema({
   userId: { type: String, required: true },
   name: { type: String },
   url: { type: String },
-  proposals: [
+  propositions: [
     {
       userId: { type: Array },
       title: { type: String },

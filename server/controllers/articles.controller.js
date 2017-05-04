@@ -40,27 +40,25 @@ function addArticle(req, res, next) {
   });
 }
 
-function addProposal(req, res, next) {
+function addProposition(req, res) {
   const query = {
     _id: mongoose.Types.ObjectId(req.params.id),
     userId: { $ne: req.user.email },
   };
-  const newProposal = {
+  const newProposition = {
     userId: req.user.email,
     body: req.body.body,
     files: req.files.map((file) => file.cloudStoragePublicUrl),
     placement: req.body.placement,
     comment: req.body.comment,
   };
-  newProposal.createDate = new Date();
+  newProposition.createDate = new Date();
 
-  Article.findOneAndUpdate(query, { $push: { proposals: newProposal } })
+  Article.findOneAndUpdate(query, { $push: { propositions: newProposition } })
     .exec().then(() => {
     res.status(200).json({});
-    next();
   }).catch((err) => {
     res.status(500).json(err);
-    next();
   });
 }
 
@@ -68,5 +66,5 @@ module.exports = {
   getArticles,
   getUserArticles,
   addArticle,
-  addProposal
+  addProposition,
 };

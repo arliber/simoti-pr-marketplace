@@ -1,15 +1,15 @@
 <template>
 
-  <div>
+  <section>
 
-    <el-table :data="opportunities" border style="width: 100%">
+    <el-table :data="articles" border style="width: 100%">
       <el-table-column type="expand">
         <template scope="props">
           <h2>Article Assets</h2>
           <div v-if="assetsAvaialble(props.row)">No assets</div>
           <ul class="files-list">
-            <li v-if="props.row.articleUrl !== ''">
-              <a :href="props.row.articleUrl" target="_blank"><i class="el-icon-share"></i> Article URL</a>
+            <li v-if="props.row.url !== ''">
+              <a :href="props.row.url" target="_blank"><i class="el-icon-share"></i> Article URL</a>
             </li>
             <li v-for="(file, index) in props.row.files">
               <a :href="file" target="_blank"><i class="el-icon-document"></i>File #{{index+1}}</a>
@@ -21,79 +21,57 @@
       <el-table-column prop="publications" label="Publication"></el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
-          <el-button type="primary" icon="plus" size="mini" @click="addProposal(scope.row)">Apply</el-button>
+          <el-button type="primary" icon="plus" size="mini" @click="addProposition(scope.row)">Apply</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- Dialog -->
-    <el-dialog title="Add proposal" v-model="proposalDialogVisible">
-      <el-alert title="What is that?" type="info" description="Tell us a bit about the client and how he fits into the article. Provide the links to link to and the preferred placement in the article" :closeable="false" show-icon></el-alert>
-      <el-form>
-        <el-form-item label="Info">
-          <el-input type="textarea" v-model="currentProposalInfo" :rows="8"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="proposalDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="submitProposal">Apply</el-button>
-      </span>
+    <el-dialog title="Add proposition" v-model="propositionDialogVisible">
+      <article-proposition-form :article="currentArticle" :visible="propositionDialogVisible" @close="closePropositionDialog"></article-proposition-form>
     </el-dialog>
     <!-- /Dialog -->
 
-  </div>
+  </section>
 
 </template>
 
 <script>
-import axios from 'axios';
+import ArticlePropositionForm from './forms/ArticlePropositionForm';
 
 export default {
   name: 'articles',
+  components: {
+    ArticlePropositionForm,
+  },
   data() {
     return {
-      proposalDialogVisible: false,
-      currentProposition: {},
-      currentProposalInfo: '',
+      propositionDialogVisible: false,
+      currentArticle: {},
     };
   },
   computed: {
-    opportunities() {
-      return this.$store.getters.marketOpportunities;
+    articles() {
+      return this.$store.getters.articles;
     },
   },
   methods: {
     goTo(route) {
       this.$router.push(route);
     },
-    addProposal(proposition) {
-      this.proposalDialogVisible = true;
-      this.currentProposition = proposition;
+    addProposition(article) {
+      this.propositionDialogVisible = true;
+      this.currentArticle = article;
     },
-    submitProposal() {
-      this.proposalDialogVisible = false;
-      this.$store.dispatch('addPropositionProposal', {
-        proposalInfo: this.currentProposalInfo,
-        opportunityId: this.currentProposition._id,
-      });
-      this.$message({
-        showClose: true,
-        message: 'Proposal was submitted for review',
-        type: 'success',
-      });
+    closePropositionDialog() {
+      this.propositionDialogVisible = false;
     },
     assetsAvaialble(row) {
-      return (row.articleUrl === '' && row.files.length === 0);
+      return (row.url === '' && row.files.length === 0);
     },
   },
   mounted() {
-    axios.get('/api/opportunities', {
-      headers: {
-        Authorization: `Bearer ${this.$store.getters.user.token}`,
-      },
-    }).then((opportunities) => {
-      this.$store.dispatch('setOpportunities', opportunities.data);
-    });
+    this.$store.dispatch('getArticles');
   },
 };
 </script>

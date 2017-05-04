@@ -11,9 +11,9 @@ const articleSchema = new Schema({
   airDate: { type: Date },
   comment: { type: String },
   status: { type: String, required: true, default: 'available' }, /* available, disabled, deleted */
-  proposals: [
+  propositions: [
     {
-      userId: { type: Array },
+      userId: { type: String },
       body: { type: String },
       files: { type: Array },
       placement: { type: String },
