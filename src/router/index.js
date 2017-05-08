@@ -5,7 +5,7 @@ import Login from '../components/Login';
 import Assets from '../components/Assets';
 import Signup from '../components/Signup';
 import Publish from '../components/Publish';
-import OpportunityForm from '../components/OpportunityForm';
+import OpportunityForm from '../components/forms/OpportunityForm';
 import store from '../store';
 
 Vue.use(Router);

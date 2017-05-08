@@ -2,21 +2,44 @@
 
   <el-tabs type="card">
     <el-tab-pane label="ARTICLES">
-      Articles
+      <section class="screen-content">
+        <el-button icon="plus" type="primary" class="add-button">Add an Article</el-button>
+        <articles class="full-width-fix"></articles>
+      </section>
     </el-tab-pane>
     <el-tab-pane label="COLUMNS">
-      Columns
+      <section class="screen-content">
+        <el-button icon="plus" type="primary" class="add-button">Add an Article</el-button>
+        <publications class="full-width-fix"></publications>
+      </section>
     </el-tab-pane>
   </el-tabs>
 
 </template>
 
 <script>
-export default {
-  name: 'assets',
-};
+  import articles from './Articles';
+  import publications from './Publications';
+
+  export default {
+    name: 'assets',
+    components: {
+      articles,
+      publications,
+    },
+  };
 </script>
 
-<style>
-
+<style scoped>
+.screen-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+  .full-width-fix {
+    width: 100%
+  }
+  .add-button {
+    margin-bottom: 20px;
+  }
 </style>

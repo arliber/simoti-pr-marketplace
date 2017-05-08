@@ -35,6 +35,25 @@ export default new Vuex.Store({
     userPublications(state) {
       return state.userPublications;
     },
+    opportunitiesWithPropositions(state) {
+      const hasCurrentUserPropositions = proposition => proposition.userId === state.user.email;
+      const filter = ({ propositions }) => {
+        if (propositions) {
+          console.log(propositions, propositions.filter(hasCurrentUserPropositions));
+          return propositions.filter(hasCurrentUserPropositions).length > 0;
+        }
+        return false;
+      };
+      const addType = type => (opportunity) => {
+        opportunity.type = type;
+        return opportunity;
+      };
+      const articles = state.articles.filter(filter).map(addType('mention'));
+      const publications = state.publications.filter(filter).map(addType('article'));
+
+      return [].concat(articles)
+               .concat(publications);
+    },
   },
   mutations: {
     SET_USER(state, userData) {

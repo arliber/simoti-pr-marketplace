@@ -7,7 +7,7 @@ const publicationSchema = new Schema({
   url: { type: String },
   propositions: [
     {
-      userId: { type: Array },
+      userId: { type: String },
       title: { type: String },
       url: { type: String},
       files: { type: Schema.Types.Mixed },
@@ -22,7 +22,7 @@ const publicationSchema = new Schema({
   updateDate: { type: Date },
 });
 
-publicationSchema.pre('save', function(next) {
+publicationSchema.pre('save', function (next) {
   // Handle dates
   const currentDate = new Date();
   this.updateDate = currentDate;
@@ -34,13 +34,13 @@ publicationSchema.pre('save', function(next) {
   next();
 });
 
-publicationSchema.statics.getPublications = function(userId) {
+publicationSchema.statics.getPublications = function (userId) {
   return this.find({
     userId: { $ne: userId },
   }).exec();
 };
 
-publicationSchema.statics.getUserPublications = function(userId) {
+publicationSchema.statics.getUserPublications = function (userId) {
   return this.find({
     userId,
   }).exec();

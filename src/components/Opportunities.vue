@@ -1,5 +1,7 @@
 <template>
-  <div class="screen-content">
+
+  <section class="screen-content">
+
     <ul id="options">
       <li v-bind:class="{'active-option': contentType === 'mention'}" @click="selectOption('mention')">
         <img src="../assets/mention.png"/>
@@ -12,17 +14,20 @@
     </ul>
 
     <articles v-if="contentType === 'mention'"></articles>
+    <publications v-if="contentType === 'full-article'"></publications>
 
-  </div>
+  </section>
 </template>
 
 <script>
 import articles from './Articles';
+import publications from './Publications';
 
 export default {
   name: 'opportunities',
   components: {
     articles,
+    publications,
   },
   data() {
     return {

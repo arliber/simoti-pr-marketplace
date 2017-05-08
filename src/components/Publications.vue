@@ -2,23 +2,17 @@
 
   <section>
 
-    <el-table :data="articles" border style="width: 100%">
+    <el-table :data="publications" border style="width: 100%">
       <el-table-column type="expand">
-        <template scope="props">
-          <h2>Article Assets</h2>
-          <div v-if="assetsAvaialble(props.row)">No assets</div>
-          <ul class="files-list">
-            <li v-if="props.row.url !== ''">
-              <a :href="props.row.url" target="_blank"><i class="el-icon-share"></i> Article URL</a>
-            </li>
-            <li v-for="(file, index) in props.row.files">
-              <a :href="file" target="_blank"><i class="el-icon-document"></i>File #{{index+1}}</a>
-            </li>
-          </ul>
+        <template scope="scope">
+          {{scope.row.comment}}
         </template>
       </el-table-column>
-      <el-table-column prop="title" label="Article"></el-table-column>
-      <el-table-column prop="publications" label="Publication"></el-table-column>
+      <el-table-column label="Name">
+        <template scope="scope">
+          <a :href="scope.row.url" target="_blank">{{scope.row.name}}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
           <el-button type="primary" icon="plus" size="mini" @click="addProposition(scope.row)">Apply</el-button>
@@ -28,7 +22,7 @@
 
     <!-- Dialog -->
     <el-dialog title="Add proposition" v-model="propositionDialogVisible">
-      <article-proposition-form :article="currentArticle" :visible="propositionDialogVisible" @close="closePropositionDialog"></article-proposition-form>
+      <publication-proposition-form :article="currentPublication" :visible="propositionDialogVisible" @close="closePropositionDialog"></publication-proposition-form>
     </el-dialog>
     <!-- /Dialog -->
 
@@ -37,28 +31,28 @@
 </template>
 
 <script>
-import ArticlePropositionForm from './forms/ArticlePropositionForm';
+import PublicationPropositionForm from './forms/PublicationPropositionForm';
 
 export default {
-  name: 'articles',
+  name: 'publications',
   components: {
-    ArticlePropositionForm,
+    PublicationPropositionForm,
   },
   data() {
     return {
       propositionDialogVisible: false,
-      currentArticle: {},
+      currentPublication: {},
     };
   },
   computed: {
-    articles() {
-      return this.$store.getters.articles;
+    publications() {
+      return this.$store.getters.publications;
     },
   },
   methods: {
-    addProposition(article) {
+    addProposition(publication) {
       this.propositionDialogVisible = true;
-      this.currentArticle = article;
+      this.currentPublication = publication;
     },
     closePropositionDialog() {
       this.propositionDialogVisible = false;
@@ -68,7 +62,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('getArticles');
+    this.$store.dispatch('getPublications');
   },
 };
 </script>

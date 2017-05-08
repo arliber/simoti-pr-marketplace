@@ -1,28 +1,30 @@
 <template>
 
   <el-form ref="form" :model="form" label-width="120px">
-    <el-form-item label="Content">
-      <el-input type="textarea" v-model="form.body" :rows="6"></el-input>
-    </el-form-item>
-
-    <el-form-item label="Assets">
-
-      <el-upload
-        drag
-        ref="uploader"
-        :auto-upload="false"
-        :multiple="true"
-        :file-list="form.files"
-        action="/">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-        <div class="el-upload__tip" slot="tip">pdf/doc/docx files with a size less than 500kb</div>
-      </el-upload>
-
-    </el-form-item>
-
-    <el-form-item label="Placement">
+    <el-form-item label="Title">
       <el-input v-model="form.placement"></el-input>
+    </el-form-item>
+
+    <el-form-item label="Article">
+
+      <el-card>
+        <el-input placeholder="URL" v-model="form.url">
+          <template slot="prepend">http://</template>
+        </el-input>
+        OR
+        <el-upload
+          drag
+          ref="uploader"
+          :auto-upload="false"
+          :multiple="true"
+          :file-list="form.files"
+          action="/">
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+          <div class="el-upload__tip" slot="tip">pdf/doc/docx files with a size less than 500kb</div>
+        </el-upload>
+
+      </el-card>
     </el-form-item>
 
     <el-form-item label="Comments">
@@ -41,13 +43,13 @@
   import store from '../../store';
 
   export default {
-    name: 'article-proposition-form',
+    name: 'publication-proposition-form',
     props: ['article', 'visible'],
     data() {
       return {
         form: {
-          body: '',
-          placement: '',
+          title: '',
+          url: '',
           comment: '',
           files: [],
         },
