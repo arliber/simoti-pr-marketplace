@@ -38,6 +38,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-console': 'off',
     'prefer-rest-params': 'off',
-    'no-underscore-dangle': 'off'
+    'no-underscore-dangle': 'off',
+    'no-else-return': 'off',
   }
 }

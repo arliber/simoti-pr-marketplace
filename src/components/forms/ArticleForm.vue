@@ -1,9 +1,7 @@
 <template>
-  <el-card>
-    <div slot="header" class="clearfix">
-      <span style="line-height: 36px;">Add new article</span>
-    </div>
 
+  <section class="screen-content">
+    <H2>New Article</H2>
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Article title">
         <el-input v-model="form.title"></el-input>
@@ -12,7 +10,7 @@
       <el-form-item label="Article">
 
         <el-card>
-          <el-input placeholder="URL" v-model="form.articleUrl">
+          <el-input placeholder="URL" v-model="form.url">
             <template slot="prepend">http://</template>
           </el-input>
           OR
@@ -33,7 +31,7 @@
 
 
       <el-form-item label="Publication name">
-        <el-input v-model="form.publications"></el-input>
+        <el-input v-model="form.publication"></el-input>
       </el-form-item>
 
       <el-form-item label="Submission date">
@@ -44,16 +42,17 @@
       </el-form-item>
 
       <el-form-item label="Comments">
-        <el-input type="textarea" v-model="form.comments"></el-input>
+        <el-input type="textarea" v-model="form.comment"></el-input>
       </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Submit</el-button>
-        <el-button @click="goTo('/opportunities')">Cancel</el-button>
+        <el-button @click="goTo('assets')">Cancel</el-button>
       </el-form-item>
 
     </el-form>
-  </el-card>
+  </section>
+
 </template>
 
 <script>
@@ -61,16 +60,16 @@ import axios from 'axios';
 import store from '../../store';
 
 export default {
-  name: 'opportunityForm',
+  name: 'article-form',
   data() {
     return {
       form: {
         title: '',
-        articleUrl: '',
-        publications: '',
+        url: '',
+        publication: '',
         submissionDate: '',
         airDate: '',
-        comments: '',
+        comment: '',
         files: [],
       },
     };
@@ -97,17 +96,17 @@ export default {
         data.append('file', files[i]);
       }
 
-      axios.put('/api/opportunities', data, {
+      axios.put('/api/articles', data, {
         headers: {
           Authorization: `Bearer ${store.getters.user.token}`,
         },
       }).then(() => {
         this.$message({
           showClose: true,
-          message: 'The opportunity was added successfully',
+          message: 'The article was added successfully',
           type: 'success',
         });
-        this.$router.push('/opportunities');
+        this.$router.push('/assets');
       }).catch(() => {
         this.$message({
           showClose: true,

@@ -35,6 +35,7 @@ import PublicationPropositionForm from './forms/PublicationPropositionForm';
 
 export default {
   name: 'publications',
+  props: ['type'],
   components: {
     PublicationPropositionForm,
   },
@@ -46,7 +47,11 @@ export default {
   },
   computed: {
     publications() {
-      return this.$store.getters.publications;
+      if (this.type === 'ownPublications') {
+        return this.$store.getters.userPublications;
+      } else {
+        return this.$store.getters.publications;
+      }
     },
   },
   methods: {
@@ -62,7 +67,11 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('getPublications');
+    if (this.type === 'ownPublications') {
+      this.$store.dispatch('getUserPublications');
+    } else {
+      this.$store.dispatch('getPublications');
+    }
   },
 };
 </script>

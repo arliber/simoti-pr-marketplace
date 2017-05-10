@@ -41,6 +41,7 @@ import ArticlePropositionForm from './forms/ArticlePropositionForm';
 
 export default {
   name: 'articles',
+  props: ['type'],
   components: {
     ArticlePropositionForm,
   },
@@ -52,7 +53,11 @@ export default {
   },
   computed: {
     articles() {
-      return this.$store.getters.articles;
+      if (this.type === 'ownArticles') {
+        return this.$store.getters.userArticles;
+      } else {
+        return this.$store.getters.articles;
+      }
     },
   },
   methods: {
@@ -68,7 +73,11 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch('getArticles');
+    if (this.type === 'ownArticles') {
+      this.$store.dispatch('getUserArticles');
+    } else {
+      this.$store.dispatch('getArticles');
+    }
   },
 };
 </script>

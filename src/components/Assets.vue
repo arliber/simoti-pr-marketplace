@@ -3,14 +3,18 @@
   <el-tabs type="card">
     <el-tab-pane label="ARTICLES">
       <section class="screen-content">
-        <el-button icon="plus" type="primary" class="add-button">Add an Article</el-button>
-        <articles class="full-width-fix"></articles>
+        <el-button icon="plus" type="primary" class="add-button" @click="goTo('article')">
+          Add an Article
+        </el-button>
+        <articles class="full-width-fix" type="ownArticles"></articles>
       </section>
     </el-tab-pane>
     <el-tab-pane label="COLUMNS">
       <section class="screen-content">
-        <el-button icon="plus" type="primary" class="add-button">Add an Article</el-button>
-        <publications class="full-width-fix"></publications>
+        <el-button icon="plus" type="primary" class="add-button" @click="goTo('publication')">
+          Add a Column
+        </el-button>
+        <publications class="full-width-fix" type="ownPublications"></publications>
       </section>
     </el-tab-pane>
   </el-tabs>
@@ -26,6 +30,11 @@
     components: {
       articles,
       publications,
+    },
+    methods: {
+      goTo(path) {
+        this.$router.push(path);
+      },
     },
   };
 </script>

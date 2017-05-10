@@ -5,7 +5,8 @@ import Login from '../components/Login';
 import Assets from '../components/Assets';
 import Signup from '../components/Signup';
 import Publish from '../components/Publish';
-import OpportunityForm from '../components/forms/OpportunityForm';
+import ArticleForm from '../components/forms/ArticleForm';
+import PublicationForm from '../components/forms/PublicationForm';
 import store from '../store';
 
 Vue.use(Router);
@@ -38,9 +39,14 @@ const AppRouter = new Router({
       component: Assets,
     },
     {
-      path: '/opportunity-form',
-      name: 'opportunityForm',
-      component: OpportunityForm,
+      path: '/article',
+      name: 'articleForm',
+      component: ArticleForm,
+    },
+    {
+      path: '/publication',
+      name: 'publicationForm',
+      component: PublicationForm,
     },
   ],
 });
