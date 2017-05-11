@@ -42,7 +42,7 @@
 
   export default {
     name: 'article-proposition-form',
-    props: ['article', 'visible'],
+    props: ['item', 'visible'],
     data() {
       return {
         form: {
@@ -107,6 +107,3 @@
     },
   };
 </script>
-
-<style scoped>
-</style>

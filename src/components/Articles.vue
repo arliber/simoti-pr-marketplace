@@ -21,14 +21,20 @@
       <el-table-column prop="publications" label="Publication"></el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
-          <el-button type="primary" icon="plus" size="mini" @click="addProposition(scope.row)">Apply</el-button>
+          <el-button type="text"@click="showDialog(scope.row)">
+            {{actionButtonText}}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- Dialog -->
-    <el-dialog title="Add proposition" v-model="propositionDialogVisible">
-      <article-proposition-form :article="currentArticle" :visible="propositionDialogVisible" @close="closePropositionDialog"></article-proposition-form>
+    <el-dialog title="Article Propositions" v-model="dialogVisible">
+      <article-propositions
+        :item="currentItem"
+        :visible="dialogVisible"
+        @close="closeDialog">
+      </article-propositions>
     </el-dialog>
     <!-- /Dialog -->
 
@@ -37,18 +43,18 @@
 </template>
 
 <script>
-import ArticlePropositionForm from './forms/ArticlePropositionForm';
+import ArticlePropositions from './ArticlePropositions';
 
 export default {
   name: 'articles',
   props: ['type'],
   components: {
-    ArticlePropositionForm,
+    ArticlePropositions,
   },
   data() {
     return {
-      propositionDialogVisible: false,
-      currentArticle: {},
+      dialogVisible: false,
+      currentItem: {},
     };
   },
   computed: {
@@ -59,14 +65,17 @@ export default {
         return this.$store.getters.articles;
       }
     },
+    actionButtonText() {
+      return this.type === 'ownArticles' ? 'Propositions' : 'Apply';
+    },
   },
   methods: {
-    addProposition(article) {
-      this.propositionDialogVisible = true;
-      this.currentArticle = article;
+    showDialog(item) {
+      this.dialogVisible = true;
+      this.currentItem = item;
     },
-    closePropositionDialog() {
-      this.propositionDialogVisible = false;
+    closeDialog() {
+      this.dialogVisible = false;
     },
     assetsAvaialble(row) {
       return (row.url === '' && row.files.length === 0);

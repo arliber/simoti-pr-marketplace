@@ -62,6 +62,9 @@ body {
 .screen-content {
   padding: 10px 0 0 40px;
 }
+.small-screen-content {
+  padding: 10px;
+}
 #bg-container {
   border-top: 1px solid #DBC9EA;
   background: url(assets/bg.jpg) center center repeat-y;

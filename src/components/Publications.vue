@@ -15,7 +15,7 @@
       </el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
-          <el-button type="primary" icon="plus" size="mini" @click="addProposition(scope.row)">Apply</el-button>
+          <el-button @click="addProposition(scope.row)">Apply</el-button>
         </template>
       </el-table-column>
     </el-table>

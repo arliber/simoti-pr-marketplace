@@ -40,5 +40,6 @@ module.exports = {
     'prefer-rest-params': 'off',
     'no-underscore-dangle': 'off',
     'no-else-return': 'off',
+    'arrow-body-style': 'off'
   }
 }
