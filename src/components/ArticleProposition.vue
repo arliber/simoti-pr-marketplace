@@ -4,6 +4,7 @@
     <section id="propositions">
       <el-button type="text" icon="arrow-left" @click="prev" :disabled="currentProposition === 0"></el-button>
       <section id="proposition">
+        <el-alert v-if="propositions[currentProposition].isOwnersProposition" title="This is your reply" type="info" :closable="false" id="your-reply"></el-alert>
         <i class="el-icon-edit"></i> <b>Body</b>
         <p>{{propositions[currentProposition].body | emptyPlaceholder}}</p>
         <i class="el-icon-more"></i> <b>Placement</b>
@@ -96,5 +97,8 @@
     padding-top: 15px;
     display: flex;
     justify-content: center;
+  }
+  #your-reply {
+    margin-bottom: 20px;
   }
 </style>
