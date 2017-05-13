@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <main-menu></main-menu>
-    <div id="bg-container">
+    <div id="bg-container" :class="{'container-with-sidebar': this.layoutSettings.sidebarVisible}">
       <section id="content-section">
-        <notifications id="notifications"></notifications>
+        <notifications id="notifications" v-if="this.layoutSettings.sidebarVisible"></notifications>
         <router-view id="content"></router-view>
       </section>
     </div>
@@ -67,6 +67,8 @@ body {
 }
 #bg-container {
   border-top: 1px solid #DBC9EA;
+}
+.container-with-sidebar {
   background: url(assets/bg.jpg) center center repeat-y;
 }
 

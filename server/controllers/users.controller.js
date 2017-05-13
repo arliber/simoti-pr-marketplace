@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 function _extractuserData(body) {
-  if(!body.password || !body.email) {
+  if (!body.password || !body.email) {
     return false;
   } else {
     return {

@@ -21,7 +21,7 @@
       <el-table-column prop="publications" label="Publication"></el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
-          <el-button type="text"@click="showDialog(scope.row)">
+          <el-button type="text" @click="showDialog(scope.row)">
             {{actionButtonText}}
           </el-button>
         </template>
@@ -31,10 +31,17 @@
     <!-- Dialog -->
     <el-dialog title="Article Propositions" v-model="dialogVisible">
       <article-propositions
+        v-if="isItemOwner"
         :item="currentItem"
         :visible="dialogVisible"
         @close="closeDialog">
       </article-propositions>
+      <article-propositions-slim
+        v-else
+        :item="currentItem"
+        :visible="dialogVisible"
+        @close="closeDialog">
+      </article-propositions-slim>
     </el-dialog>
     <!-- /Dialog -->
 
@@ -44,16 +51,19 @@
 
 <script>
 import ArticlePropositions from './ArticlePropositions';
+import ArticlePropositionsSlim from './ArticlePropositionsSlim';
 
 export default {
   name: 'articles',
   props: ['type'],
   components: {
     ArticlePropositions,
+    ArticlePropositionsSlim,
   },
   data() {
     return {
       dialogVisible: false,
+      isItemOwner: false,
       currentItem: {},
     };
   },
@@ -66,13 +76,14 @@ export default {
       }
     },
     actionButtonText() {
-      return this.type === 'ownArticles' ? 'Propositions' : 'Apply';
+      return this.type === 'ownArticles' ? 'Show Propositions' : 'Add Proposition';
     },
   },
   methods: {
     showDialog(item) {
       this.dialogVisible = true;
       this.currentItem = item;
+      this.isItemOwner = this.currentItem.userId === this.$store.getters.user.email;
     },
     closeDialog() {
       this.dialogVisible = false;

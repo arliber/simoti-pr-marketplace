@@ -39,7 +39,6 @@ export default new Vuex.Store({
       const hasCurrentUserPropositions = proposition => proposition.userId === state.user.email;
       const filter = ({ propositions }) => {
         if (propositions) {
-          console.log(propositions, propositions.filter(hasCurrentUserPropositions));
           return propositions.filter(hasCurrentUserPropositions).length > 0;
         }
         return false;

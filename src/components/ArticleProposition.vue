@@ -14,7 +14,7 @@
       </section>
       <el-button type="text" icon="arrow-right" @click="next" :disabled="currentProposition >= propositions.length - 1"></el-button>
     </section>
-    <section id="actions">
+    <section id="actions" v-if="showActions">
       <el-button-group v-if="currentProposition === propositions.length - 1">
         <el-tooltip effect="dark" content="Consider replying to this proposition before rejecting" placement="top">
           <el-button>Reject</el-button>
@@ -36,7 +36,7 @@
 <script>
   export default {
     name: 'article-proposition',
-    props: ['propositions'],
+    props: ['propositions', 'showActions'],
     data() {
       return {
         currentProposition: 0,

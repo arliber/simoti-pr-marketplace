@@ -12,22 +12,37 @@
       <el-table-column label="Status"></el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
-          <el-button type="primary" icon="plus" size="mini" @click="addProposition(scope.row)">Apply</el-button>
+          <el-button type="text" @click="showDialog(scope.row)">Show Proposition</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- Dialog -->
+    <el-dialog title="Article Propositions" v-model="dialogVisible">
+      <article-propositions-slim
+        :item="currentItem"
+        :visible="dialogVisible"
+        @close="closeDialog">
+      </article-propositions-slim>
+    </el-dialog>
+
   </section>
 
 </template>
 
 <script>
+import ArticlePropositionsSlim from './ArticlePropositionsSlim';
 
 export default {
   name: 'status',
+  components: {
+    ArticlePropositionsSlim,
+  },
   data() {
     return {
-      propositionDialogVisible: false,
-      currentArticle: {},
+      dialogVisible: false,
+      isItemOwner: false,
+      currentItem: {},
     };
   },
   computed: {
@@ -44,6 +59,13 @@ export default {
                 .sort((a, b) => a.createDate - b.createDate)
                 .find(proposition => proposition.userId === this.$store.getters.user.email);
       return lastProposition ? lastProposition.title : '-';
+    },
+    showDialog(item) {
+      this.dialogVisible = true;
+      this.currentItem = item;
+    },
+    closeDialog() {
+      this.dialogVisible = false;
     },
   },
   filters: {
