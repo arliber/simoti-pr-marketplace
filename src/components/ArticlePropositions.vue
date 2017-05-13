@@ -18,7 +18,7 @@
           <article-proposition :propositions="selectedPropositions" class="small-screen-content"></article-proposition>
         </el-tab-pane>
         <el-tab-pane label="Reply to proposition" name="form">
-          <article-proposition-form :item="item" class="small-screen-content"></article-proposition-form>
+          <article-proposition-form :item="item" @cancel="closeDialog" class="small-screen-content"></article-proposition-form>
         </el-tab-pane>
       </el-tabs>
       <el-alert v-else id="select-proposition" :closable="false"  type="info" show-icon
@@ -59,8 +59,7 @@
     computed: {
       propositionGroups() {
         return Array.from(this.item.propositions)
-          .sort((a, b) => b.createDate - a.createDate)
-          .reverse()
+          .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
           .reduce((groups, proposition) => {
             if (!groups.find(item => item.userId === proposition.userId)) {
               groups.push({
@@ -83,6 +82,9 @@
     methods: {
       propositionsSelected(el) {
         this.currentPropositionUser = this.propositionGroups[Number(el.index)].userId;
+      },
+      closeDialog() {
+        this.$emit('close');
       },
     },
   };

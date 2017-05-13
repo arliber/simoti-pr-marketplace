@@ -11,7 +11,7 @@
         <i class="el-icon-warning"></i> <b>Comment</b>
         <p>{{propositions[currentProposition].comment | emptyPlaceholder}}</p>
       </section>
-      <el-button type="text" icon="arrow-right" @click="next" :disabled="currentProposition === propositions.length - 1"></el-button>
+      <el-button type="text" icon="arrow-right" @click="next" :disabled="currentProposition >= propositions.length - 1"></el-button>
     </section>
     <section id="actions">
       <el-button-group v-if="currentProposition === propositions.length - 1">
@@ -44,6 +44,22 @@
     watch: {
       propositions() {
         this.currentProposition = this.propositions.length - 1;
+      },
+    },
+    mounted() {
+      // First run does not trigger the watcher
+      this.currentProposition = this.propositions.length - 1 || 0;
+    },
+    computed: {
+      propositionsLength() {
+        return this.propositions.length || 0;
+      },
+      currentProposition() {
+        if (this.currentSelectedProposition === -1) {
+          return this.propositions.length - 1;
+        } else {
+          return this.currentSelectedProposition;
+        }
       },
     },
     filters: {

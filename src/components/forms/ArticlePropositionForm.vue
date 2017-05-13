@@ -31,7 +31,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="onSubmit">Submit</el-button>
-      <el-button @click="close">Cancel</el-button>
+      <el-button @click="cancel">Cancel</el-button>
     </el-form-item>
   </el-form>
 
@@ -65,7 +65,8 @@
           message: 'The proposition was added successfully',
           type: 'success',
         });
-        this.close();
+        this.cancel();
+        return Promise.resolve();
       },
       notifyOnError() {
         this.$message({
@@ -80,9 +81,9 @@
         this.form.comment = '';
         this.form.files = [];
       },
-      close() {
+      cancel() {
         this.clearForm();
-        this.$emit('close');
+        this.$emit('cancel');
       },
       onSubmit() {
         const data = new FormData();
@@ -95,13 +96,19 @@
         for (let i = 0; i < files.length; i += 1) {
           data.append('file', files[i]);
         }
+        // Add current userId to distinguish between user and owner comment
+        data.append('userId', store.getters.user.userId);
+
         // Action
         const payload = {
           data,
-          articleId: this.article._id,
+          articleId: this.item._id,
         };
         store.dispatch('addArticleProposition', payload)
              .then(this.notifyOnSuccess)
+             .then(() => {
+               return store.dispatch('getUserArticles');
+             })
              .catch(this.notifyOnError);
       },
     },

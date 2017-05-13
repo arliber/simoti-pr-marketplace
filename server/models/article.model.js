@@ -19,6 +19,7 @@ const articleSchema = new Schema({
       placement: { type: String },
       comment: { type: String },
       createDate: { type: Date },
+      isOwnersProposition: { type: Boolean, default: false },
     },
   ],
   createDate: { type: Date },

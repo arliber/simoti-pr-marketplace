@@ -43,7 +43,7 @@ function addArticle(req, res, next) {
 function addProposition(req, res) {
   const query = {
     _id: mongoose.Types.ObjectId(req.params.id),
-    userId: { $ne: req.user.email },
+    /*userId: { $ne: req.user.email },*/ // Need to be able to add proposition to himself
   };
   const newProposition = {
     userId: req.user.email,
@@ -51,6 +51,7 @@ function addProposition(req, res) {
     files: req.files.map((file) => file.cloudStoragePublicUrl),
     placement: req.body.placement,
     comment: req.body.comment,
+    isOwnersProposition: req.body.userId !== req.user.email, // TODO: req.body.userId could be faked - allow this condition only to article owners
   };
   newProposition.createDate = new Date();
 
