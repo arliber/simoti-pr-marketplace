@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import articles from './Articles';
-import publications from './Publications';
+import articles from './Articles/Articles';
+import publications from './Publications/Publications';
 
 export default {
   name: 'opportunities',

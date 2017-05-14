@@ -4,10 +4,10 @@
     <el-col>
       <el-tabs v-model="activeTab">
         <el-tab-pane label="Add proposition" name="form">
-          <article-proposition-form :item="item" :visible="visible" @cancel="closeDialog" class="small-screen-content"></article-proposition-form>
+          <publication-proposition-form :item="item" :visible="visible" @cancel="closeDialog" class="small-screen-content"></publication-proposition-form>
         </el-tab-pane>
         <el-tab-pane label="Propositions History" name="proposition">
-          <article-proposition :propositions="selectedPropositions" :showActions="false" class="small-screen-content"></article-proposition>
+          <publication-proposition :propositions="selectedPropositions" :showActions="false" class="small-screen-content"></publication-proposition>
         </el-tab-pane>
       </el-tabs>
       </el-alert>
@@ -17,11 +17,11 @@
 </template>
 
 <script>
-  import ArticlePropositionForm from './forms/ArticlePropositionForm';
-  import ArticleProposition from './ArticleProposition';
+  import PublicationProposition from './PublicationProposition';
+  import PublicationPropositionForm from '../forms/PublicationPropositionForm';
 
   export default {
-    name: 'article-propositions-slim',
+    name: 'publication-propositions-slim',
     props: ['item', 'visible'],
     data() {
       return {
@@ -29,8 +29,8 @@
       };
     },
     components: {
-      ArticleProposition,
-      ArticlePropositionForm,
+      PublicationProposition,
+      PublicationPropositionForm,
     },
     computed: {
       selectedPropositions() {

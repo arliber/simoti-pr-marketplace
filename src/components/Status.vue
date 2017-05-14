@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import ArticlePropositionsSlim from './ArticlePropositionsSlim';
+import ArticlePropositionsSlim from './Articles/ArticlePropositionsSlim';
 
 export default {
   name: 'status',

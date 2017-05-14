@@ -14,6 +14,7 @@ const publicationSchema = new Schema({
       status: { type: String, required: true, default: 'available' }, /* available, disabled, deleted */
       comment: { type: String },
       createDate: { type: Date },
+      isOwnersProposition: { type: Boolean, default: false },
     },
   ],
   status: { type: String, required: true, default: 'available' }, /* available, disabled, deleted */
@@ -29,6 +30,11 @@ publicationSchema.pre('save', function (next) {
 
   if (!this.createDate) {
     this.createDate = currentDate;
+  }
+
+  // Append HTTP to article links
+  if (this.url && !this.url.match(/http:\/\//)) {
+    this.url = `http://${this.url}`;
   }
 
   next();

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import ArticlePropositionForm from './forms/ArticlePropositionForm';
+  import ArticlePropositionForm from '../forms/ArticlePropositionForm';
   import ArticleProposition from './ArticleProposition';
 
   export default {

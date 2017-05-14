@@ -124,5 +124,12 @@ export default new Vuex.Store({
         commit('SET_USERPUBLICATIONS', res.data);
       });
     },
+    addPublicationProposition({ state }, payload) {
+      return axios.post(`/api/publications/${payload.publicationId}/propositions`, payload.data, {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+    },
   },
 });

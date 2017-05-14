@@ -40,14 +40,17 @@ function addPublication(req, res, next) {
 function addProposition(req, res, next) {
   const query = {
     _id: mongoose.Types.ObjectId(req.params.id),
-    userId: { $ne: req.user.email },
+    // userId: { $ne: req.user.email },
   };
+  // TODO: req.body.inReplyToUser could be faked - allow this condition only to article owners
+  const isOwnersProposition = typeof req.body.inReplyToUser !== 'undefined';
   const newProposition = {
-    userId: req.user.email,
-    title: req.user.title,
-    url: req.user.url,
+    userId: isOwnersProposition ? req.body.inReplyToUser : req.user.email,
+    title: req.body.title,
+    url: req.body.url,
     files: req.files.map((file) => file.cloudStoragePublicUrl),
     comment: req.body.comment,
+    isOwnersProposition,
   };
   newProposition.createDate = new Date();
 

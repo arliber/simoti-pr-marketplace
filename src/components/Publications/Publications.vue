@@ -2,23 +2,17 @@
 
   <section>
 
-    <el-table :data="articles" border style="width: 100%">
+    <el-table :data="publications" border style="width: 100%">
       <el-table-column type="expand">
-        <template scope="props">
-          <h2>Article Assets</h2>
-          <div v-if="assetsAvaialble(props.row)">No assets</div>
-          <ul class="files-list">
-            <li v-if="props.row.url !== ''">
-              <a :href="props.row.url" target="_blank"><i class="el-icon-share"></i> Article URL</a>
-            </li>
-            <li v-for="(file, index) in props.row.files">
-              <a :href="file" target="_blank"><i class="el-icon-document"></i>File #{{index+1}}</a>
-            </li>
-          </ul>
+        <template scope="scope">
+          {{scope.row.comment}}
         </template>
       </el-table-column>
-      <el-table-column prop="title" label="Article"></el-table-column>
-      <el-table-column prop="publication" label="Publication"></el-table-column>
+      <el-table-column label="Name">
+        <template scope="scope">
+          <a :href="scope.row.url" target="_blank">{{scope.row.name}}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
           <el-button type="text" @click="showDialog(scope.row)">
@@ -29,19 +23,19 @@
     </el-table>
 
     <!-- Dialog -->
-    <el-dialog title="Article Propositions" v-model="dialogVisible">
-      <article-propositions
+    <el-dialog title="Add proposition" v-model="dialogVisible" size="large">
+      <publication-propositions
         v-if="isItemOwner"
         :item="currentItem"
         :visible="dialogVisible"
         @close="closeDialog">
-      </article-propositions>
-      <article-propositions-slim
+      </publication-propositions>
+      <publication-propositions-slim
         v-else
         :item="currentItem"
         :visible="dialogVisible"
         @close="closeDialog">
-      </article-propositions-slim>
+      </publication-propositions-slim>
     </el-dialog>
     <!-- /Dialog -->
 
@@ -50,15 +44,15 @@
 </template>
 
 <script>
-import ArticlePropositions from './ArticlePropositions';
-import ArticlePropositionsSlim from './ArticlePropositionsSlim';
+import PublicationPropositions from './PublicationPropositions';
+import PublicationPropositionsSlim from './PublicationPropositionsSlim';
 
 export default {
-  name: 'articles',
+  name: 'publications',
   props: ['type'],
   components: {
-    ArticlePropositions,
-    ArticlePropositionsSlim,
+    PublicationPropositions,
+    PublicationPropositionsSlim,
   },
   data() {
     return {
@@ -68,15 +62,15 @@ export default {
     };
   },
   computed: {
-    articles() {
-      if (this.type === 'ownArticles') {
-        return this.$store.getters.userArticles;
+    publications() {
+      if (this.type === 'ownPublications') {
+        return this.$store.getters.userPublications;
       } else {
-        return this.$store.getters.articles;
+        return this.$store.getters.publications;
       }
     },
     actionButtonText() {
-      return this.type === 'ownArticles' ? 'Show Propositions' : 'Add Proposition';
+      return this.type === 'ownPublications' ? 'Show Propositions' : 'Add Proposition';
     },
   },
   methods: {
@@ -93,10 +87,10 @@ export default {
     },
   },
   mounted() {
-    if (this.type === 'ownArticles') {
-      this.$store.dispatch('getUserArticles');
+    if (this.type === 'ownPublications') {
+      this.$store.dispatch('getUserPublications');
     } else {
-      this.$store.dispatch('getArticles');
+      this.$store.dispatch('getPublications');
     }
   },
 };
