@@ -45,13 +45,15 @@ function addProposition(req, res) {
     _id: mongoose.Types.ObjectId(req.params.id),
     /*userId: { $ne: req.user.email },*/ // Need to be able to add proposition to himself
   };
+  // TODO: req.body.inReplyToUser could be faked - allow this condition only to article owners
+  const isOwnersProposition = typeof req.body.inReplyToUser !== 'undefined';
   const newProposition = {
-    userId: req.user.email,
+    userId: isOwnersProposition ? req.body.inReplyToUser : req.user.email,
     body: req.body.body,
     files: req.files.map((file) => file.cloudStoragePublicUrl),
     placement: req.body.placement,
     comment: req.body.comment,
-    isOwnersProposition: req.body.userId !== req.user.email, // TODO: req.body.userId could be faked - allow this condition only to article owners
+    isOwnersProposition,
   };
   newProposition.createDate = new Date();
 

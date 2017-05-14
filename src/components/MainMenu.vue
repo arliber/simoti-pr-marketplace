@@ -10,7 +10,7 @@
 
      <el-menu-item v-if="isAuthenticated" index="4" class="push-right" id="avatar-logout" @click="logout">
        <!--<img :src="'https://api.adorable.io/avatars/50/' + user.email" :alt="user.email" class="avatar"/>-->
-       <el-tooltip effect="dark" :content="user.email" placement="left">
+       <el-tooltip effect="dark" :content="'Logged in as ' + user.email" placement="left">
            <div>Logout</div>
        </el-tooltip>
      </el-menu-item>

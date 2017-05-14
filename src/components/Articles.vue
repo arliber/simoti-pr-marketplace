@@ -18,7 +18,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="title" label="Article"></el-table-column>
-      <el-table-column prop="publications" label="Publication"></el-table-column>
+      <el-table-column prop="publication" label="Publication"></el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
           <el-button type="text" @click="showDialog(scope.row)">

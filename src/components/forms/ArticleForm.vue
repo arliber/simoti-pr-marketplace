@@ -14,18 +14,17 @@
             <template slot="prepend">http://</template>
           </el-input>
           OR
-          <el-upload
+          <!--<el-upload
             drag
             ref="uploader"
             :auto-upload="false"
             :multiple="true"
-            :file-list="form.files"
             action="/">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
             <div class="el-upload__tip" slot="tip">pdf/doc/docx files with a size less than 500kb</div>
-          </el-upload>
-
+          </el-upload>-->
+          <br /><input type="file" name="file" multiple="multiple">
         </el-card>
       </el-form-item>
 
@@ -70,7 +69,6 @@ export default {
         submissionDate: '',
         airDate: '',
         comment: '',
-        files: [],
       },
     };
   },
@@ -78,11 +76,9 @@ export default {
     goTo(route) {
       this.$router.push(route);
     },
-    /*
-     // TODO: Need to clean the list when new files are added. Asked @ https://github.com/ElemeFE/element/issues/4401
-     clearFileList() {
+    /* clearFileList(file, Filelist) { // Use on-change ?
       console.log('Clearing list..');
-      this.$refs.uploader.uploadFiles = [];
+      // this.$refs.uploader.uploadFiles = [];
     },*/
     onSubmit() {
       const data = new FormData();
@@ -93,7 +89,7 @@ export default {
       // Files
       const files = document.querySelector('input[name=file]').files;
       for (let i = 0; i < files.length; i += 1) {
-        data.append('file', files[i]);
+        data.append('files', files[i]);
       }
 
       axios.put('/api/articles', data, {

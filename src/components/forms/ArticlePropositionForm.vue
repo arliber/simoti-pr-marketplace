@@ -7,17 +7,17 @@
 
     <el-form-item label="Assets">
 
-      <el-upload
+      <!--<el-upload
         drag
         ref="uploader"
         :auto-upload="false"
         :multiple="true"
-        :file-list="form.files"
         action="/">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
         <div class="el-upload__tip" slot="tip">pdf/doc/docx files with a size less than 500kb</div>
-      </el-upload>
+      </el-upload>-->
+      <input type="file" name="file" multiple="multiple">
 
     </el-form-item>
 
@@ -42,14 +42,13 @@
 
   export default {
     name: 'article-proposition-form',
-    props: ['item', 'visible'],
+    props: ['item', 'visible', 'inReplyToUser'],
     data() {
       return {
         form: {
           body: '',
           placement: '',
           comment: '',
-          files: [],
         },
       };
     },
@@ -79,7 +78,6 @@
         this.form.body = '';
         this.form.placement = '';
         this.form.comment = '';
-        this.form.files = [];
       },
       cancel() {
         this.clearForm();
@@ -94,10 +92,12 @@
         // Files
         const files = document.querySelector('input[name=file]').files;
         for (let i = 0; i < files.length; i += 1) {
-          data.append('file', files[i]);
+          data.append('files', files[i]);
         }
         // Add current userId to distinguish between user and owner comment
-        data.append('userId', store.getters.user.userId);
+        if (this.inReplyToUser && this.inReplyToUser) {
+          data.append('inReplyToUser', this.inReplyToUser);
+        }
 
         // Action
         const payload = {
@@ -108,6 +108,9 @@
              .then(this.notifyOnSuccess)
              .then(() => {
                return store.dispatch('getUserArticles');
+             })
+             .then(() => {
+               return store.dispatch('getArticles');
              })
              .catch(this.notifyOnError);
       },

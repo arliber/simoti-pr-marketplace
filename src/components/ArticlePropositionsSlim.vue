@@ -4,7 +4,7 @@
     <el-col>
       <el-tabs v-model="activeTab">
         <el-tab-pane label="Add proposition" name="form">
-          <article-proposition-form :item="item" @cancel="closeDialog" class="small-screen-content"></article-proposition-form>
+          <article-proposition-form :item="item" :visible="visible" @cancel="closeDialog" class="small-screen-content"></article-proposition-form>
         </el-tab-pane>
         <el-tab-pane label="Propositions History" name="proposition">
           <article-proposition :propositions="selectedPropositions" :showActions="false" class="small-screen-content"></article-proposition>

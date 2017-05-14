@@ -18,7 +18,7 @@
           <article-proposition :propositions="selectedPropositions" :showActions="true" class="small-screen-content"></article-proposition>
         </el-tab-pane>
         <el-tab-pane label="Reply to proposition" name="form">
-          <article-proposition-form :item="item" @cancel="closeDialog" class="small-screen-content"></article-proposition-form>
+          <article-proposition-form :item="item" @cancel="closeDialog" :inReplyToUser="currentPropositionUser" class="small-screen-content"></article-proposition-form>
         </el-tab-pane>
       </el-tabs>
       <el-alert v-else id="select-proposition" :closable="false"  type="info" show-icon
