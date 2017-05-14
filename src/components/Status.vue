@@ -8,8 +8,12 @@
         </template>
       </el-table-column>
       <el-table-column label="Title" :formatter="titleColumn"></el-table-column>
-      <el-table-column label="Publication"></el-table-column>
-      <el-table-column label="Status"></el-table-column>
+      <el-table-column label="Publication" prop="publication"></el-table-column>
+      <el-table-column label="Status">
+        <template scope="scope">
+          <el-tag :type="itemStatus(scope.row).label">{{itemStatus(scope.row).text}}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="Actions" width="150">
         <template scope="scope" class="center">
           <el-button type="text" @click="showDialog(scope.row)">Show Proposition</el-button>
@@ -56,9 +60,38 @@ export default {
         return row.title;
       }
       const lastProposition = Array.from(row.propositions)
-                .sort((a, b) => a.createDate - b.createDate)
+                .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
                 .find(proposition => proposition.userId === this.$store.getters.user.email);
       return lastProposition ? lastProposition.title : '-';
+    },
+    itemStatus(row) {
+      const statusMap = {
+        pending: {
+          text: 'Pending',
+          label: 'warning',
+        },
+        ready: {
+          text: 'Ready',
+          label: 'primary',
+        },
+        accepted: {
+          text: 'Accepted',
+          label: 'Success',
+        },
+        rejected: {
+          text: 'Rejected',
+          label: 'danger',
+        },
+      };
+      const lastProposition = Array.from(row.propositions)
+        .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
+        .find(proposition => proposition.userId === this.$store.getters.user.email);
+
+      if (lastProposition && lastProposition.isOwnersProposition) {
+        return statusMap.ready;
+      } else {
+        return statusMap.pending;
+      }
     },
     showDialog(item) {
       this.dialogVisible = true;
