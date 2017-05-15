@@ -2,7 +2,7 @@
 
   <section id="dashboard">
     <article class="screen-content">
-      <h1>Welcome to Simoti Agency Platform</h1>
+      <h1>Welcome to Simoti Agency Platform <el-tag type="gray">BETA</el-tag></h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu quam sed libero condimentum venenatis in nec diam. Fusce auctor quis urna ultrices pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin auctor sagittis mi. Integer varius felis et justo iaculis consequat. Ut dignissim finibus lectus. Etiam sit amet placerat magna. Pellentesque ornare vitae purus quis ultrices. Morbi posuere velit sed mi vulputate scelerisque.</p>
     </article>
 
@@ -54,7 +54,7 @@
     </section>
 
     <section class="screen-content">
-      <i class="el-icon-star-off"></i> What's new?
+      <h1><i class="el-icon-star-off"></i> What's new?</h1>
       <p>
         We now allow full control over what is getting airied via our propositions disucssion system!
         <br />
