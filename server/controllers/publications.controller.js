@@ -64,9 +64,33 @@ function addProposition(req, res, next) {
   });
 }
 
+function updatePropositionStatus(req, res, next) {
+  const query = {
+    _id: mongoose.Types.ObjectId(req.params.id),
+  };
+  Publication.findOne(query).then((publication) => {
+    publication.propositions.forEach((proposition) => {
+      if (proposition.userId === req.params.userId) {
+        proposition.status = req.body.status;
+      }
+    });
+    publication.save().then(() => {
+      res.status(200).json({});
+      next();
+    }).catch((err) => {
+      res.status(500).json(err);
+      next();
+    });
+  }).catch((err) => {
+    res.status(500).json(err);
+    next();
+  })
+}
+
 module.exports = {
   getPublications,
   getUserPublications,
   addPublication,
   addProposition,
+  updatePropositionStatus,
 };

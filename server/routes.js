@@ -29,5 +29,6 @@ routes.get('/api/publications', jwtMiddleware, publicationsController.getPublica
 routes.get('/api/publications/me', jwtMiddleware, publicationsController.getUserPublications);
 routes.put('/api/publications', jwtMiddleware, uploadMiddleware, publicationsController.addPublication);
 routes.post('/api/publications/:id/propositions', jwtMiddleware, uploadMiddleware, publicationsController.addProposition);
+routes.post('/api/publications/:id/propositions/:userId', jwtMiddleware, uploadMiddleware, publicationsController.updatePropositionStatus);
 
 module.exports = routes;

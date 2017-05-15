@@ -131,5 +131,19 @@ export default new Vuex.Store({
         },
       });
     },
+    updatePropositionStatus({ dispatch, state }, payload) {
+      const { status } = payload;
+      return axios.post(`/api/${payload.type}/${payload.itemId}/propositions/${payload.userId}`, { status }, {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      }).then(() => {
+        if (payload.type === 'publications') {
+          return Promise.all([dispatch('getPublications'), dispatch('getUserPublications')]);
+        } else {
+          return Promise.all([dispatch('getArticles'), dispatch('getUserArticles')]);
+        }
+      });
+    },
   },
 });

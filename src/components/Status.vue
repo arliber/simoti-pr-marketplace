@@ -24,10 +24,17 @@
     <!-- Dialog -->
     <el-dialog title="Article Propositions" v-model="dialogVisible">
       <article-propositions-slim
+        v-if="currentItemType === 'mention'"
         :item="currentItem"
         :visible="dialogVisible"
         @close="closeDialog">
       </article-propositions-slim>
+      <publication-propositions-slim
+        v-else
+        :item="currentItem"
+        :visible="dialogVisible"
+        @close="closeDialog">
+      </publication-propositions-slim>
     </el-dialog>
 
   </section>
@@ -36,17 +43,20 @@
 
 <script>
 import ArticlePropositionsSlim from './Articles/ArticlePropositionsSlim';
+import PublicationPropositionsSlim from './Publications/PublicationPropositionsSlim';
 
 export default {
   name: 'status',
   components: {
     ArticlePropositionsSlim,
+    PublicationPropositionsSlim,
   },
   data() {
     return {
       dialogVisible: false,
       isItemOwner: false,
       currentItem: {},
+      currentItemType: '',
     };
   },
   computed: {
@@ -96,6 +106,7 @@ export default {
     showDialog(item) {
       this.dialogVisible = true;
       this.currentItem = item;
+      this.currentItemType = item.type;
     },
     closeDialog() {
       this.dialogVisible = false;
