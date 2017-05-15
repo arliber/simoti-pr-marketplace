@@ -11,13 +11,13 @@ const publicationSchema = new Schema({
       title: { type: String },
       url: { type: String},
       files: { type: Schema.Types.Mixed },
-      status: { type: String, required: true, default: 'available' }, /* available, disabled, deleted */
+      status: { type: String, required: true, default: 'pending' },
       comment: { type: String },
       createDate: { type: Date },
       isOwnersProposition: { type: Boolean, default: false },
     },
   ],
-  status: { type: String, required: true, default: 'available' }, /* available, disabled, deleted */
+  status: { type: String, required: true, default: 'available' },
   comment: { type: String },
   createDate: { type: Date },
   updateDate: { type: Date },

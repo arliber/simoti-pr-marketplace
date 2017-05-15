@@ -84,7 +84,7 @@ function updatePropositionStatus(req, res, next) {
   }).catch((err) => {
     res.status(500).json(err);
     next();
-  })
+  });
 }
 
 module.exports = {

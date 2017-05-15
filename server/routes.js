@@ -23,6 +23,7 @@ routes.get('/api/articles', jwtMiddleware, articlesController.getArticles);
 routes.get('/api/articles/me', jwtMiddleware, articlesController.getUserArticles);
 routes.put('/api/articles', jwtMiddleware, uploadMiddleware, articlesController.addArticle);
 routes.post('/api/articles/:id/propositions', jwtMiddleware, uploadMiddleware, articlesController.addProposition);
+routes.post('/api/articles/:id/propositions/:userId', jwtMiddleware, uploadMiddleware, articlesController.updatePropositionStatus);
 
 // Publications
 routes.get('/api/publications', jwtMiddleware, publicationsController.getPublications);

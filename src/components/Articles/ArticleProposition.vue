@@ -21,16 +21,33 @@
       </section>
       <el-button type="text" icon="arrow-right" @click="next" :disabled="currentProposition >= propositions.length - 1"></el-button>
     </section>
+    <hr />
+    <section id="status">
+      <el-alert
+        v-if="propositions[currentProposition].status === 'accepted'"
+        title="This opportunity was accepted"
+        :closable="false"
+        type="success"
+        show-icon>
+      </el-alert>
+      <el-alert
+        v-if="propositions[currentProposition].status === 'rejected'"
+        title="This opportunity was rejected"
+        :closable="false"
+        type="error"
+        show-icon>
+      </el-alert>
+    </section>
     <section id="actions" v-if="showActions && propositions.length > 0">
       <el-button-group v-if="currentProposition === propositions.length - 1">
         <el-tooltip effect="dark" content="Consider replying to this proposition before rejecting" placement="top">
-          <el-button>Reject</el-button>
+          <el-button @click="reject">Reject</el-button>
         </el-tooltip>
-        <el-button type="primary">Accept</el-button>
+        <el-button type="primary" @click="accept">Accept</el-button>
       </el-button-group>
       <el-alert
         v-else
-        title="Navigate to latest propositions from that user to accept it"
+        title="Navigate to the latest proposition to accept it"
         :closable="false"
         type="info"
         show-icon>
@@ -43,7 +60,7 @@
 <script>
   export default {
     name: 'article-proposition',
-    props: ['propositions', 'showActions'],
+    props: ['item', 'propositions', 'showActions'],
     data() {
       return {
         currentProposition: 0,
@@ -75,6 +92,26 @@
       prev() {
         this.currentProposition = this.currentProposition - 1;
       },
+      reject() {
+        const payload = {
+          type: 'articles',
+          userId: this.propositions[this.currentProposition].userId,
+          itemId: this.item._id,
+          status: 'rejected',
+        };
+        this.$store.dispatch('updatePropositionStatus', payload);
+        this.$emit('close');
+      },
+      accept() {
+        const payload = {
+          type: 'articles',
+          userId: this.propositions[this.currentProposition].userId,
+          itemId: this.item._id,
+          status: 'accepted',
+        };
+        this.$store.dispatch('updatePropositionStatus', payload);
+        this.$emit('close');
+      },
     },
   };
 </script>
@@ -93,12 +130,17 @@
     margin-left: 20px;
   }
   #actions {
-    border-top: 1px solid rgb(221, 209, 229);
     padding-top: 15px;
     display: flex;
     justify-content: center;
   }
   #your-reply {
     margin-bottom: 20px;
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #d6cbe2, #8857bc, #d6cbe2);
   }
 </style>

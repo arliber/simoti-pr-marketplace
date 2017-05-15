@@ -47,7 +47,7 @@
       </el-button-group>
       <el-alert
         v-else
-        title="Navigate to the latest proposition accept it"
+        title="Navigate to the latest proposition to accept it"
         :closable="false"
         type="info"
         show-icon>

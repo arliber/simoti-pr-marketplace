@@ -15,7 +15,7 @@
     <el-col :span="16">
       <el-tabs v-if="currentPropositionUser !== -1" v-model="activeTab">
         <el-tab-pane label="Proposition" name="proposition">
-          <article-proposition :propositions="selectedPropositions" :showActions="true" class="small-screen-content"></article-proposition>
+          <article-proposition :item="item" :propositions="selectedPropositions" @close="closeDialog" :showActions="true" class="small-screen-content"></article-proposition>
         </el-tab-pane>
         <el-tab-pane label="Reply to proposition" name="form">
           <article-proposition-form :item="item" @cancel="closeDialog" :inReplyToUser="currentPropositionUser" class="small-screen-content"></article-proposition-form>

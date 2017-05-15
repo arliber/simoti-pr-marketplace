@@ -19,6 +19,7 @@ const articleSchema = new Schema({
       placement: { type: String },
       comment: { type: String },
       createDate: { type: Date },
+      status: { type: String, required: true, default: 'pending' },
       isOwnersProposition: { type: Boolean, default: false },
     },
   ],

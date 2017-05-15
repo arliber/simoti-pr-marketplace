@@ -65,9 +65,33 @@ function addProposition(req, res) {
   });
 }
 
+function updatePropositionStatus(req, res, next) {
+  const query = {
+    _id: mongoose.Types.ObjectId(req.params.id),
+  };
+  Article.findOne(query).then((article) => {
+    article.propositions.forEach((proposition) => {
+      if (proposition.userId === req.params.userId) {
+        proposition.status = req.body.status;
+      }
+    });
+    article.save().then(() => {
+      res.status(200).json({});
+      next();
+    }).catch((err) => {
+      res.status(500).json(err);
+      next();
+    });
+  }).catch((err) => {
+    res.status(500).json(err);
+    next();
+  });
+}
+
 module.exports = {
   getArticles,
   getUserArticles,
   addArticle,
   addProposition,
+  updatePropositionStatus,
 };
