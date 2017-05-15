@@ -50,7 +50,7 @@
     </section>
 
     <section class="screen-content" id="help">
-      <el-button type="primary" @click="contactForm">Need help? Contact us!</el-button>
+      <el-button type="primary" size="small" @click="contactForm">Need help? Contact us!</el-button>
     </section>
 
     <section class="screen-content">
