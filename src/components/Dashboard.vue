@@ -3,48 +3,52 @@
   <section id="dashboard">
     <article class="screen-content">
       <h1>Welcome to Simoti Agency Platform <el-tag type="gray">BETA</el-tag></h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu quam sed libero condimentum venenatis in nec diam. Fusce auctor quis urna ultrices pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin auctor sagittis mi. Integer varius felis et justo iaculis consequat. Ut dignissim finibus lectus. Etiam sit amet placerat magna. Pellentesque ornare vitae purus quis ultrices. Morbi posuere velit sed mi vulputate scelerisque.</p>
+      <p>
+        Simoti the Robot got your back & it's time to get some free mentions & quotes!
+        How to get mentions?
+        <ol>
+          <li>Click 'Publish' on the top menu</li>
+          <li>Overview the opportunities Simoti has for you, click 'Apply' on one of them</li>
+          <li>Offer either a full article or a short description</li>
+          <li>We will feedback you if it has been accepted & pending going live</li>
+        </ol>
+      </p>
     </article>
 
     <section id="tiles">
       <section>
         <h2>Publications</h2>
-        <h3>{{this.metrics.totalPublications || 0}}</h3>
+        <h3>{{this.metrics.totalPublications}}</h3>
         <section class="info">
           <h4>What's that?</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu quam sed libero!
-          </p>
+          <p>Our constant growing amount of publications</p>
         </section>
       </section>
       <section>
         <h2>Articles</h2>
-        <h3>{{metrics.totalArticles || 0}}</h3>
+        <h3>{{metrics.totalArticles}}</h3>
         <section class="info">
           <h4>What's that?</h4>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu quam sed libero!
+            About to air an article? upload it to Simoti <br />
+            and let us offer you mentions (you get credits for that!)
           </p>
         </section>
       </section>
       <section>
         <h2>Pending Opportunities</h2>
-        <h3>{{(metrics.publicationsOpportunities.pending || 0) + (metrics.articlesOpportunities.pending || 0)}}</h3>
+        <h3>{{metrics.publicationsOpportunities.pending + metrics.articlesOpportunities.pending}}</h3>
         <section class="info">
           <h4>What's that?</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu quam sed libero!
-          </p>
+          <p>The number of opportuntiies you applied for and waiting to go live</p>
         </section>
       </section>
       <section>
         <h2>Received propositions</h2>
-        <h3>{{(metrics.publicationsPropositions || 0) + (metrics.articlesPropositions || 0)}}</h3>
+        <h3>{{metrics.publicationsPropositions + metrics.articlesPropositions}}</h3>
         <section class="info">
           <h4>What's that?</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu quam sed libero!
-          </p>
+          <p>Got columns? this is the number of propositions you have pending</p>
         </section>
       </section>
     </section>
@@ -56,10 +60,10 @@
     <section class="screen-content">
       <h1><i class="el-icon-star-off"></i> What's new?</h1>
       <p>
-        We now allow full control over what is getting airied via our propositions disucssion system!
+        With Simoti the Robot our partners now can receive propositions to their columns, for each accepted & aired proposition (mention) they will be credited back with
+        one free opportunity to use.
         <br />
-        You can easily Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        <br />
+        Simply a mention for a mention.
       </p>
     </section>
 
@@ -74,7 +78,22 @@ export default {
   name: 'dashboard',
   data() {
     return {
-      metrics: {},
+      metrics: {
+        totalArticles: 0,
+        totalPublications: 0,
+        publicationsOpportunities: {
+          accepted: 0,
+          rejected: 0,
+          pending: 0,
+        },
+        articlesOpportunities: {
+          accepted: 0,
+          rejected: 0,
+          pending: 0,
+        },
+        publicationsPropositions: 0,
+        articlesPropositions: 0,
+      },
     };
   },
   methods: {
@@ -83,7 +102,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$store.getters.user.email);
     return axios.get('/api/dashboard', {
       headers: {
         Authorization: `Bearer ${this.$store.getters.user.token}`,

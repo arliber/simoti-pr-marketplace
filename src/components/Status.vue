@@ -96,9 +96,12 @@ export default {
       const lastProposition = Array.from(row.propositions)
         .sort((a, b) => new Date(b.createDate) - new Date(a.createDate))
         .find(proposition => proposition.userId === this.$store.getters.user.email);
-
-      if (lastProposition && lastProposition.isOwnersProposition) {
-        return statusMap.ready;
+      if (lastProposition) {
+        if (lastProposition.status === 'pending' && lastProposition.isOwnersProposition) {
+          return statusMap.ready;
+        } else {
+          return statusMap[lastProposition.status];
+        }
       } else {
         return statusMap.pending;
       }
