@@ -24,14 +24,14 @@
     <hr />
     <section id="status">
       <el-alert
-        v-if="propositions[currentProposition].status === 'accepted'"
+        v-if="propositions[currentProposition] && propositions[currentProposition].status === 'accepted'"
         title="This opportunity was accepted"
         :closable="false"
         type="success"
         show-icon>
       </el-alert>
       <el-alert
-        v-if="propositions[currentProposition].status === 'rejected'"
+        v-if="propositions[currentProposition] && propositions[currentProposition].status === 'rejected'"
         title="This opportunity was rejected"
         :closable="false"
         type="error"

@@ -29,7 +29,7 @@ function _getModelPropositionsCount(model ,userId) {
   return model.find({ userId }).exec().then((items) => {
     return items.reduce((result, item) => {
       const propositions = item.propositions.filter(proposition => !proposition.isOwnersProposition);
-      return propositions.length;
+      return result + propositions.length;
     }, 0);
   });
 }
