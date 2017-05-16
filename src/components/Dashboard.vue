@@ -9,7 +9,7 @@
     <section id="tiles">
       <section>
         <h2>Publications</h2>
-        <h3>41</h3>
+        <h3>{{this.metrics.totalPublications || 0}}</h3>
         <section class="info">
           <h4>What's that?</h4>
           <p>
@@ -18,8 +18,8 @@
         </section>
       </section>
       <section>
-        <h2>Publications</h2>
-        <h3>41</h3>
+        <h2>Articles</h2>
+        <h3>{{metrics.totalArticles || 0}}</h3>
         <section class="info">
           <h4>What's that?</h4>
           <p>
@@ -28,8 +28,8 @@
         </section>
       </section>
       <section>
-        <h2>Publications</h2>
-        <h3>41</h3>
+        <h2>Pending Opportunities</h2>
+        <h3>{{(metrics.publicationsOpportunities.pending || 0) + (metrics.articlesOpportunities.pending || 0)}}</h3>
         <section class="info">
           <h4>What's that?</h4>
           <p>
@@ -38,8 +38,8 @@
         </section>
       </section>
       <section>
-        <h2>Publications</h2>
-        <h3>41</h3>
+        <h2>Received propositions</h2>
+        <h3>{{(metrics.publicationsPropositions || 0) + (metrics.articlesPropositions || 0)}}</h3>
         <section class="info">
           <h4>What's that?</h4>
           <p>
@@ -68,12 +68,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'dashboard',
+  data() {
+    return {
+      metrics: {},
+    };
+  },
   methods: {
     contactForm() {
       window.open('http://simoti.co/pages/contact/', '_blank');
     },
+  },
+  mounted() {
+    console.log(this.$store.getters.user.email);
+    return axios.get('/api/dashboard', {
+      headers: {
+        Authorization: `Bearer ${this.$store.getters.user.token}`,
+      },
+    }).then((res) => {
+      this.metrics = res.data;
+    });
   },
 };
 </script>

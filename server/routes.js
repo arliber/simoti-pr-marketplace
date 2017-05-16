@@ -10,6 +10,7 @@ const uploadMiddleware = require('./middlewares/upload.middleware');
 const usersController = require('./controllers/users.controller.js');
 const articlesController = require('./controllers/articles.controller');
 const publicationsController = require('./controllers/publications.controller');
+const dashboardController = require('./controllers/dashboard.controller');
 
 // Routes
 const routes = express.Router();
@@ -31,5 +32,8 @@ routes.get('/api/publications/me', jwtMiddleware, publicationsController.getUser
 routes.put('/api/publications', jwtMiddleware, uploadMiddleware, publicationsController.addPublication);
 routes.post('/api/publications/:id/propositions', jwtMiddleware, uploadMiddleware, publicationsController.addProposition);
 routes.post('/api/publications/:id/propositions/:userId', jwtMiddleware, uploadMiddleware, publicationsController.updatePropositionStatus);
+
+// Dashboard
+routes.get('/api/dashboard', jwtMiddleware, dashboardController.getDashboard);
 
 module.exports = routes;
