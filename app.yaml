@@ -17,9 +17,6 @@ env: flex
 manual_scaling:
   instances: 1
 
-#automatic_scaling:
-#  max_idle_instances: 1
-
 # [START env]
 env_variables:
   GCLOUD_STORAGE_BUCKET: simoti

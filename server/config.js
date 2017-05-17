@@ -5,4 +5,5 @@ module.exports = {
   },
   storageBucket: 'simoti',
   fileSize: 5, //MB
+  demoAccountEmail: 'demo@simoti.co',
 };
