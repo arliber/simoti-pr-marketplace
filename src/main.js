@@ -22,6 +22,7 @@ new Vue({
   components: { App },
   render: h => h(App),
   mounted() {
+    document.title = 'Simoti';
     axios.interceptors.response.use(response => response, (err) => {
       if (err.response.status === 401 || err.response.status === 403) {
         this.$router.push('/login');

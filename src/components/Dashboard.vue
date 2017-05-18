@@ -73,6 +73,7 @@
 
 <script>
 import axios from 'axios';
+import store from '../store';
 
 export default {
   name: 'dashboard',
@@ -101,14 +102,27 @@ export default {
       window.open('http://simoti.co/pages/contact/', '_blank');
     },
   },
+  beforeRouteEnter(to, from, next) {
+    axios.get('/api/dashboard', {
+      headers: {
+        Authorization: `Bearer ${store.getters.user.token}`,
+      },
+    }).then((res) => {
+      next((v) => {
+        v.metrics = res.data;
+      });
+    }).catch(() => {
+      next('/login');
+    });
+  },
   mounted() {
-    return axios.get('/api/dashboard', {
+    /* return axios.get('/api/dashboard', {
       headers: {
         Authorization: `Bearer ${this.$store.getters.user.token}`,
       },
     }).then((res) => {
       this.metrics = res.data;
-    });
+    });*/
   },
 };
 </script>
