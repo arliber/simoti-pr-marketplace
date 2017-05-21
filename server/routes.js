@@ -6,6 +6,7 @@ const config = require('./config');
 const jwtMiddleware = require('./middlewares/jwt.middleware');
 const uploadMiddleware = require('./middlewares/upload.middleware');
 const demoRejector = require('./middlewares/demoRejector.middleware');
+const envRejector = require('./middlewares/envRejector.middleware');
 
 // Controllers
 const usersController = require('./controllers/users.controller.js');
@@ -17,7 +18,7 @@ const dashboardController = require('./controllers/dashboard.controller');
 const routes = express.Router();
 
 // Users
-routes.post('/api/signup', usersController.signup);
+routes.post('/api/signup', envRejector('production'), usersController.signup);
 routes.post('/api/signin', usersController.signin);
 
 // Articles
