@@ -1,6 +1,6 @@
 <template>
   <el-row justify="center" align="middle" type="flex">
-    <el-col :xs="20" :sm="12" :md="12" :lg="8">
+    <el-col :xs="12" :sm="12" :md="12" :lg="12">
       <el-card class="box-card">
 
         <div slot="header">Login</div>

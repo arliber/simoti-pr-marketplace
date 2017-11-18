@@ -1,44 +1,37 @@
 <template>
-  <el-card class="box-card">
-    <div slot="header" class="clearfix">
-      <span style="line-height: 36px;">My Articles</span>
-      <el-button style="float: right;" type="primary" @click="goTo('/opportunity-form')"><i class="el-icon-plus"></i> Add</el-button>
-    </div>
 
-    <el-table :data="opportunities" border style="width: 100%">
-      <el-table-column type="expand">
-        <template scope="props">
-          {{props.row.status !== 'Ready' ? 'A notification will be sent once complete':'Notification sent, please check email'}}
-        </template>
-      </el-table-column>
-      <el-table-column prop="title" label="Article"></el-table-column>
-      <el-table-column prop="publications" label="Publication"></el-table-column>
-      <el-table-column prop="status" label="Status" width="100"
-        :filters="filters"
-        :filter-method="filterStatus">
-        <template scope="scope">
-          <el-tag
-            :type="statusType(scope.row.status)"
-            close-transition>{{scope.row.status}}</el-tag>
-        </template>
-      </el-table-column>
-    </el-table>
+  <section class="screen-content">
 
-  </el-card>
+    <ul id="options">
+      <li v-bind:class="{'active-option': contentType === 'mention'}" @click="selectOption('mention')">
+        <img src="../assets/mention.png"/>
+        <p>Publish a Mention</p>
+      </li>
+      <li v-bind:class="{'active-option': contentType === 'full-article'}" @click="selectOption('full-article')">
+        <img src="../assets/article.png"/>
+        <p>Publish Full Article</p>
+      </li>
+    </ul>
+
+    <articles v-if="contentType === 'mention'"></articles>
+    <publications v-if="contentType === 'full-article'"></publications>
+
+  </section>
 </template>
 
 <script>
-import axios from 'axios';
+import articles from './Articles/Articles';
+import publications from './Publications/Publications';
 
 export default {
   name: 'opportunities',
+  components: {
+    articles,
+    publications,
+  },
   data() {
     return {
-      filters: [
-        { text: 'Pending', value: 'Pending' },
-        { text: 'In progress', value: 'In progress' },
-        { text: 'Ready', value: 'Ready' },
-      ],
+      contentType: 'mention',
     };
   },
   computed: {
@@ -47,40 +40,40 @@ export default {
     },
   },
   methods: {
-    goTo(route) {
-      this.$router.push(route);
+    selectOption(type) {
+      this.contentType = type;
     },
-    filterStatus(value, row) {
-      return row.tag === value;
-    },
-    statusType(status) {
-      const types = {
-        Pending: 'gray',
-        'In progress': 'warning',
-        Ready: 'success',
-      };
-      return types[status];
-    },
-  },
-  mounted() {
-    axios.get('/api/opportunities', {
-      headers: {
-        Authorization: `Bearer ${this.$store.getters.user.token}`,
-      },
-    }).then((opportunities) => {
-      this.$store.dispatch('setOpportunities', opportunities.data);
-    });
   },
 };
 </script>
 
 <style scoped>
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
+  #options {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: space-between;
+    color: #8B59B7;
+    margin: 0 0 20px 0;
   }
-  .clearfix:after {
-    clear: both
+  #options li {
+    border-radius: 6px;
+    border: 1px solid #8B59B7;
+    flex-basis: 45%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+  }
+  #options li.active-option {
+    border-width: 3px;
+    font-weight: bold;
+  }
+  #options li:hover {
+    background: #F2EEF5;
+  }
+  #options li img {
+    width: 80px;
+    margin-right: 20px;
   }
 </style>

@@ -1,26 +1,24 @@
 <template>
   <div id="app">
     <main-menu></main-menu>
-    <el-row>
-      <el-col :span="6" v-if="layoutSettings.sidebarVisible">
-        <sidebar></sidebar>
-      </el-col>
-      <el-col :span="layoutSettings.mainSectionWidth" id="main-content">
-        <router-view></router-view>
-      </el-col>
-    </el-row>
+    <div id="bg-container" :class="{'container-with-sidebar': this.layoutSettings.sidebarVisible}">
+      <section id="content-section">
+        <notifications id="notifications" v-if="this.layoutSettings.sidebarVisible"></notifications>
+        <router-view id="content"></router-view>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
 import MainMenu from './components/MainMenu';
-import Sidebar from './components/Sidebar';
+import Notifications from './components/Notifications';
 
 export default {
   name: 'app',
   components: {
     MainMenu,
-    Sidebar,
+    Notifications,
   },
   data() {
     return {
@@ -61,7 +59,41 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-#main-content {
-  padding: 30px;
+.screen-content {
+  padding: 10px 0 0 40px;
+}
+.small-screen-content {
+  padding: 10px;
+}
+#bg-container {
+  border-top: 1px solid #DBC9EA;
+}
+.container-with-sidebar {
+  background: url(assets/bg.jpg) center center repeat-y;
+}
+
+#content-section {
+  width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+}
+#notifications {
+  flex: 0 0 18em;
+}
+#content {
+  flex: 1;
+  background: #fff;
+}
+.el-tabs__header {
+  background: #F2F2F2 linear-gradient(to right, #f2f2f2 0%,#ffffff 100%);
+  padding-left: 40px;
+  border-color: #DBC9EA;
+}
+.el-tabs__item.is-active {
+  background: #fff;
+  border-radius: 0 !important;
+  border-top-color: transparent !important;
 }
 </style>

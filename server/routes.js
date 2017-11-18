@@ -1,85 +1,41 @@
 const express = require('express');
-const expressJwt = require('express-jwt');
-const streamToPromise = require('stream-to-promise');
-const multer = require('multer');
-const Storage = require('@google-cloud/storage');
 const config = require('./config');
+/*const streamToPromise = require('stream-to-promise');*/
+
+// MIddlewares
+const jwtMiddleware = require('./middlewares/jwt.middleware');
+const uploadMiddleware = require('./middlewares/upload.middleware');
+const demoRejector = require('./middlewares/demoRejector.middleware');
+const envRejector = require('./middlewares/envRejector.middleware');
+
+// Controllers
 const usersController = require('./controllers/users.controller.js');
-const opportunitiesController = require('./controllers/opportunities.controller.js');
-
-// JWT
-const jwtCheck = expressJwt({
-  secret: config.server.jwtSecret,
-});
-
-// File uploads
-const upload = multer({
-  /* dest: 'uploads/',*/
-  storage: multer.MemoryStorage,
-  limits: {
-    fileSize: 5 * 1024 * 1024,
-  },
-});
-const storage = Storage();
-const bucket = storage.bucket('simoti');
-
-function getPublicUrl(filename) {
-  return `https://storage.googleapis.com/simoti/${filename}`;
-}
-
-function sendUploadToGCS(req, res, next) {
-  if (!req.files || req.files.length === 0) {
-    return next();
-  }
-
-  const timestamp = Date.now();
-  let filesPromises = [];
-  for (let i = 0; i < req.files.length; i += 1) {
-    try {
-      const gcsname = timestamp + req.files[i].originalname;
-      const file = bucket.file(gcsname);
-      const stream = file.createWriteStream({
-        metadata: {
-          contentType: req.files[i].mimetype,
-        },
-      });
-      stream.end(req.files[i].buffer);
-
-      filesPromises.push(stream);
-    } catch (err) {
-      req.files[i].cloudStorageError = err;
-      next(err);
-    }
-  }
-
-  Promise.all(filesPromises).then(() => {
-    for (let i = 0; i < req.files.length; i += 1) {
-      const gcsname = timestamp + req.files[i].originalname;
-      req.files[i].cloudStorageObject = gcsname;
-      req.files[i].cloudStoragePublicUrl = getPublicUrl(gcsname);
-    }
-    next();
-  }).catch((err) => {
-    next(err);
-  });
-
-}
+const articlesController = require('./controllers/articles.controller');
+const publicationsController = require('./controllers/publications.controller');
+const dashboardController = require('./controllers/dashboard.controller');
 
 // Routes
-let routes = express.Router();
+const routes = express.Router();
 
-function routeLogger(req, res, next) {
-  console.log(`Router: access to [${req.path}] by [${req.user?req.user.email:'guest'}]`);
-  next();
-}
+// Users
+routes.post('/api/signup', envRejector('production'), usersController.signup);
+routes.post('/api/signin', usersController.signin);
 
-routes.post('/api/signup', routeLogger, usersController.signup);
-routes.post('/api/signin', routeLogger, usersController.signin);
+// Articles
+routes.get('/api/articles', jwtMiddleware, articlesController.getArticles);
+routes.get('/api/articles/me', jwtMiddleware, articlesController.getUserArticles);
+routes.put('/api/articles', jwtMiddleware, demoRejector, uploadMiddleware, articlesController.addArticle);
+routes.post('/api/articles/:id/propositions', jwtMiddleware, demoRejector, uploadMiddleware, articlesController.addProposition);
+routes.post('/api/articles/:id/propositions/:userId', jwtMiddleware, demoRejector, uploadMiddleware, articlesController.updatePropositionStatus);
 
-routes.get('/api/opportunities', jwtCheck, routeLogger, opportunitiesController.getOpportunities);
-routes.put('/api/opportunities',jwtCheck, routeLogger, upload.any(), sendUploadToGCS, opportunitiesController.addOpportunity);
-routes.post('/api/opportunities/:id/proposals/', jwtCheck, routeLogger, opportunitiesController.addProposal);
+// Publications
+routes.get('/api/publications', jwtMiddleware, publicationsController.getPublications);
+routes.get('/api/publications/me', jwtMiddleware, publicationsController.getUserPublications);
+routes.put('/api/publications', jwtMiddleware, demoRejector, uploadMiddleware, publicationsController.addPublication);
+routes.post('/api/publications/:id/propositions', jwtMiddleware, demoRejector, uploadMiddleware, publicationsController.addProposition);
+routes.post('/api/publications/:id/propositions/:userId', jwtMiddleware, demoRejector, uploadMiddleware, publicationsController.updatePropositionStatus);
 
-// routes.get('/api/marketOpportunities', jwtCheck, opportunitiesController.getMarketOpportunities);
+// Dashboard
+routes.get('/api/dashboard', jwtMiddleware, dashboardController.getDashboard);
 
 module.exports = routes;

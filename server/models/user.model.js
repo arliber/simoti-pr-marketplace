@@ -22,7 +22,7 @@ userSchema.pre('save', function(next) {
 
   // Handle password
   if (this.isNew) {
-    this.password = crypto.createHash('sha256').update(this.password).digest('base64')
+    this.password = crypto.createHash('sha256').update(this.password).digest('base64');
   }
 
   next();

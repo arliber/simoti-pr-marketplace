@@ -14,8 +14,8 @@
 # [START app_yaml]
 runtime: nodejs
 env: flex
-automatic_scaling:
-  max_idle_instances: 1
+manual_scaling:
+  instances: 1
 
 # [START env]
 env_variables:

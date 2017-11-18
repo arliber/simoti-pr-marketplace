@@ -11,7 +11,10 @@ export default new Vuex.Store({
   })],
   state: {
     user: { },
-    opportunities: [],
+    articles: [],
+    userArticles: [],
+    publications: [],
+    userPublications: [],
   },
   getters: {
     isUserLoggedin(state) {
@@ -20,11 +23,35 @@ export default new Vuex.Store({
     user(state) {
       return state.user;
     },
-    personalOpportunities(state) {
-      return state.opportunities.filter(opportunity => opportunity.userId === state.user.email);
+    articles(state) {
+      return state.articles;
     },
-    marketOpportunities(state) {
-      return state.opportunities.filter(opportunity => opportunity.userId !== state.user.email);
+    userArticles(state) {
+      return state.userArticles;
+    },
+    publications(state) {
+      return state.publications;
+    },
+    userPublications(state) {
+      return state.userPublications;
+    },
+    opportunitiesWithPropositions(state) {
+      const hasCurrentUserPropositions = proposition => proposition.userId === state.user.email;
+      const filter = ({ propositions }) => {
+        if (propositions) {
+          return propositions.filter(hasCurrentUserPropositions).length > 0;
+        }
+        return false;
+      };
+      const addType = type => (opportunity) => {
+        opportunity.type = type;
+        return opportunity;
+      };
+      const articles = state.articles.filter(filter).map(addType('mention'));
+      const publications = state.publications.filter(filter).map(addType('article'));
+
+      return [].concat(articles)
+               .concat(publications);
     },
   },
   mutations: {
@@ -34,19 +61,17 @@ export default new Vuex.Store({
     UNSET_USER(state) {
       state.user = {};
     },
-    SET_OPPORTUNITIES(state, opportunities) {
-      state.opportunities = opportunities;
+    SET_ARTICLES(state, articles) {
+      state.articles = articles;
     },
-    ADD_OPPORTUNITY(state, opportunity) {
-      state.opportunities.push(opportunity);
+    SET_USERARTICLES(state, userArticles) {
+      state.userArticles = userArticles;
     },
-    ADD_PROPOSAL(state, payload) {
-      state.opportunities
-        .find(opportunity => opportunity._id === payload.opportunityId)
-        .proposals.push({
-          userId: state.user.email,
-          proposalInfo: payload.proposalInfo,
-        });
+    SET_PUBLICATIONS(state, publications) {
+      state.publications = publications;
+    },
+    SET_USERPUBLICATIONS(state, userPublications) {
+      state.userPublications = userPublications;
     },
   },
   actions: {
@@ -56,22 +81,68 @@ export default new Vuex.Store({
     unsetUser({ commit }) {
       commit('UNSET_USER');
     },
-    setOpportunities({ commit }, opportunities) {
-      commit('SET_OPPORTUNITIES', opportunities);
+    getArticles({ commit, state }) {
+      return axios.get('/api/articles', {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      }).then((res) => {
+        commit('SET_ARTICLES', res.data);
+      });
     },
-    addOpportunity({ commit }, opportunity) {
-      commit('ADD_OPPORTUNITY', opportunity);
+    getUserArticles({ commit, state }) {
+      return axios.get('/api/articles/me', {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      }).then((res) => {
+        commit('SET_USERARTICLES', res.data);
+      });
     },
-    addPropositionProposal({ commit, state }, payload) {
-      const data = {
-        proposalInfo: payload.proposalInfo,
-      };
-      return axios.post(`/api/opportunities/${payload.opportunityId}/proposals`, data, {
+    addArticleProposition({ state }, payload) {
+      return axios.post(`/api/articles/${payload.articleId}/propositions`, payload.data, {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+    },
+    getPublications({ commit, state }) {
+      return axios.get('/api/publications', {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      }).then((res) => {
+        commit('SET_PUBLICATIONS', res.data);
+      });
+    },
+    getUserPublications({ commit, state }) {
+      return axios.get('/api/publications/me', {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      }).then((res) => {
+        commit('SET_USERPUBLICATIONS', res.data);
+      });
+    },
+    addPublicationProposition({ state }, payload) {
+      return axios.post(`/api/publications/${payload.publicationId}/propositions`, payload.data, {
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      });
+    },
+    updatePropositionStatus({ dispatch, state }, payload) {
+      const { status } = payload;
+      return axios.post(`/api/${payload.type}/${payload.itemId}/propositions/${payload.userId}`, { status }, {
         headers: {
           Authorization: `Bearer ${state.user.token}`,
         },
       }).then(() => {
-        commit('ADD_PROPOSAL', payload);
+        if (payload.type === 'publications') {
+          return Promise.all([dispatch('getPublications'), dispatch('getUserPublications')]);
+        } else {
+          return Promise.all([dispatch('getArticles'), dispatch('getUserArticles')]);
+        }
       });
     },
   },
